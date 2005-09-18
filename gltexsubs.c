@@ -1,5 +1,5 @@
 /*
- * $Id: gltexsubs.c,v 1.1 2005-09-18 22:07:52 dhmunro Exp $
+ * $Id: gltexsubs.c,v 1.1.1.1 2005-09-18 22:07:52 dhmunro Exp $
  * This file contains functions that deal with version and OS
  * specific features of 3D textures.
  */

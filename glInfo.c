@@ -1,5 +1,5 @@
 /*
- * $Id: glInfo.c,v 1.1 2005-09-18 22:07:46 dhmunro Exp $
+ * $Id: glInfo.c,v 1.1.1.1 2005-09-18 22:07:46 dhmunro Exp $
  * GL visual enquiry functions for X11, using GLX
  */
 /* Copyright (c) 2005, The Regents of the University of California.
@@ -38,7 +38,7 @@ extern void get_visual_attribs(Display *dpy, XVisualInfo *vInfo,
 
 
 
-/* $Id: glInfo.c,v 1.1 2005-09-18 22:07:46 dhmunro Exp $ */
+/* $Id: glInfo.c,v 1.1.1.1 2005-09-18 22:07:46 dhmunro Exp $ */
 
 /*
  * Copyright (C) 1999  Brian Paul   All Rights Reserved.

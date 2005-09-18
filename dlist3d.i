@@ -1,5 +1,5 @@
 /*
- * $Id: dlist3d.i,v 1.1 2005-09-18 22:07:45 dhmunro Exp $
+ * $Id: dlist3d.i,v 1.1.1.1 2005-09-18 22:07:45 dhmunro Exp $
  * These functions insert objects into the yorgl display,
  * change the viewpoint, play the display list, etc.
  * Users ordinarily call functions in dlist3d.i so those 

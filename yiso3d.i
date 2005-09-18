@@ -1,5 +1,5 @@
 /*
- * $Id: yiso3d.i,v 1.1 2005-09-18 22:07:52 dhmunro Exp $
+ * $Id: yiso3d.i,v 1.1.1.1 2005-09-18 22:07:52 dhmunro Exp $
  * autoloads for yiso3d subpackage of yorgl package
  */
 /* Copyright (c) 2005, The Regents of the University of California.

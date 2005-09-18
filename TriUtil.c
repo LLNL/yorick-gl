@@ -1,5 +1,5 @@
 /*
- * $Id: TriUtil.c,v 1.1 2005-09-18 22:07:41 dhmunro Exp $
+ * $Id: TriUtil.c,v 1.1.1.1 2005-09-18 22:07:41 dhmunro Exp $
  * This file contains utility functions for manipulating lists
  * of triangle arrays and strips
  */

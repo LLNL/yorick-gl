@@ -1,5 +1,5 @@
 /*
- * $Id: glMouse.c,v 1.1 2005-09-18 22:07:46 dhmunro Exp $
+ * $Id: glMouse.c,v 1.1.1.1 2005-09-18 22:07:46 dhmunro Exp $
  * The functions in this file respond to mouse movements in 
  * an OpenGL window.
  */

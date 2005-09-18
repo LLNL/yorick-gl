@@ -1,5 +1,5 @@
 /*
- * $Id: oglx.c,v 1.1 2005-09-18 22:08:03 dhmunro Exp $
+ * $Id: oglx.c,v 1.1.1.1 2005-09-18 22:08:03 dhmunro Exp $
  * GL window management for X11, using GLX
  * for yorick-gl package - this source unused and may be out of date
  */

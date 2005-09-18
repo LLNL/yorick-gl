@@ -1,5 +1,5 @@
 /*
- * $Id: glPolys.h,v 1.1 2005-09-18 22:07:46 dhmunro Exp $
+ * $Id: glPolys.h,v 1.1.1.1 2005-09-18 22:07:46 dhmunro Exp $
  * Header file for the routines that draw lists of polygons.
  */
 /* Copyright (c) 2005, The Regents of the University of California.

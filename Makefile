@@ -1,5 +1,5 @@
 # Makefile for yorick-gl, the yorgl OpenGL package
-# $Id: Makefile,v 1.1 2005-09-18 22:07:55 dhmunro Exp $
+# $Id: Makefile,v 1.1.1.1 2005-09-18 22:07:55 dhmunro Exp $
 
 Y_MAKEDIR=
 Y_EXE=

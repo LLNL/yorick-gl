@@ -1,5 +1,5 @@
 /*
- * $Id: glfunc.i,v 1.1 2005-09-18 22:07:42 dhmunro Exp $
+ * $Id: glfunc.i,v 1.1.1.1 2005-09-18 22:07:42 dhmunro Exp $
  * This file connects yorick to the compiled functions in 
  * the OpenGL based 3D graphics package.
  */

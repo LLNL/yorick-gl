@@ -1,5 +1,5 @@
 /*
- * $Id: contour.i,v 1.1 2005-09-18 22:08:00 dhmunro Exp $
+ * $Id: contour.i,v 1.1.1.1 2005-09-18 22:08:00 dhmunro Exp $
  * These functions extract iso-surfaces and slicing planes
  * from 3D meshes.
  * The results can be displayed using functions in pl3gl.i.

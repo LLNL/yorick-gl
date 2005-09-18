@@ -1,5 +1,5 @@
 /*
- * $Id: glWrappers.h,v 1.1 2005-09-18 22:07:48 dhmunro Exp $
+ * $Id: glWrappers.h,v 1.1.1.1 2005-09-18 22:07:48 dhmunro Exp $
  * Header file for the routines that handle mouse motion
  * in OpenGL windows.
  */

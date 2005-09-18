@@ -1,5 +1,5 @@
 /*
- * $Id: Gradient3D.c,v 1.1 2005-09-18 22:07:58 dhmunro Exp $
+ * $Id: Gradient3D.c,v 1.1.1.1 2005-09-18 22:07:58 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.

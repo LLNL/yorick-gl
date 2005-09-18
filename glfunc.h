@@ -1,5 +1,5 @@
 /*
- * $Id: glfunc.h,v 1.1 2005-09-18 22:07:49 dhmunro Exp $
+ * $Id: glfunc.h,v 1.1.1.1 2005-09-18 22:07:49 dhmunro Exp $
  * Header file for GL related functions made known to yorick
  */
 /* Copyright (c) 2005, The Regents of the University of California.

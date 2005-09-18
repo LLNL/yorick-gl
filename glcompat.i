@@ -1,5 +1,5 @@
 /*
- * $Id: glcompat.i,v 1.1 2005-09-18 22:07:49 dhmunro Exp $
+ * $Id: glcompat.i,v 1.1.1.1 2005-09-18 22:07:49 dhmunro Exp $
  * This file contains functions from earlier versions of
  * yorgl that have been replaced or renamed. They are provided
  * to allow earlier decks to run with newer versions of yorgl.

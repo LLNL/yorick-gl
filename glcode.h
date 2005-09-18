@@ -1,5 +1,5 @@
 /*
- * $Id: glcode.h,v 1.1 2005-09-18 22:07:49 dhmunro Exp $
+ * $Id: glcode.h,v 1.1.1.1 2005-09-18 22:07:49 dhmunro Exp $
  * Declarations for external OpenGL module.  These functions are
  * defined in glcode.c and are called appropriately by the CView
  * derived classes.

@@ -1,5 +1,5 @@
 /*  
- * $Id: glxWinUtils.c,v 1.1 2005-09-18 22:07:54 dhmunro Exp $
+ * $Id: glxWinUtils.c,v 1.1.1.1 2005-09-18 22:07:54 dhmunro Exp $
  * Windowing utilities for GLX.
  *
  * The intent here is to expose the policies behind visual selection

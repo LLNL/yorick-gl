@@ -1,5 +1,5 @@
 /*
- * $Id: yorgl.i,v 1.1 2005-09-18 22:08:03 dhmunro Exp $
+ * $Id: yorgl.i,v 1.1.1.1 2005-09-18 22:08:03 dhmunro Exp $
  * autoloads for yorgl package
  */
 /* Copyright (c) 2005, The Regents of the University of California.

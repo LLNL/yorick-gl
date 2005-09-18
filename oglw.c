@@ -1,5 +1,5 @@
 /*
- * $Id: oglw.c,v 1.1 2005-09-18 22:08:03 dhmunro Exp $
+ * $Id: oglw.c,v 1.1.1.1 2005-09-18 22:08:03 dhmunro Exp $
  * GL window management for MS Windows
  * for yorick-gl package - this source unused and may be out of date
  */

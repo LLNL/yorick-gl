@@ -1,5 +1,5 @@
 /*
- * $Id: testgl.i,v 1.1 2005-09-18 22:07:52 dhmunro Exp $
+ * $Id: testgl.i,v 1.1.1.1 2005-09-18 22:07:52 dhmunro Exp $
  * Demonstration of 3D plots using the OpenGL based
  * 3D graphics package in yorick.
  */

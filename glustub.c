@@ -1,5 +1,5 @@
 /*
- * $Id: glustub.c,v 1.1 2005-09-18 22:07:53 dhmunro Exp $
+ * $Id: glustub.c,v 1.1.1.1 2005-09-18 22:07:53 dhmunro Exp $
  * GLU is not always present alongside GL (e.g.- Windows)
  * here are the three GLU routines yorgl needs
  * -- these are loosely based on Mesa-4.0.1 sources

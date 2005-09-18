@@ -1,5 +1,5 @@
 /*
- * $Id: glx11setup.h,v 1.1 2005-09-18 22:07:53 dhmunro Exp $
+ * $Id: glx11setup.h,v 1.1.1.1 2005-09-18 22:07:53 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.

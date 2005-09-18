@@ -1,5 +1,5 @@
 /*
- * $Id: gltexture.c,v 1.1 2005-09-18 22:07:53 dhmunro Exp $
+ * $Id: gltexture.c,v 1.1.1.1 2005-09-18 22:07:53 dhmunro Exp $
  * This file contains functions that use OpenGL texture capabilities.
  * A significant application is interactive volume visualization
  * using either 2D or 3D textures (prefereable 3D).

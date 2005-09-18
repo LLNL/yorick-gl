@@ -1,5 +1,5 @@
 /*
- * $Id: glprofile.i,v 1.1 2005-09-18 22:07:50 dhmunro Exp $
+ * $Id: glprofile.i,v 1.1.1.1 2005-09-18 22:07:50 dhmunro Exp $
  * run this file to generate profiling information for the OpenGL
  * based 3D graphics package in yorick
  */
