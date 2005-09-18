@@ -1,0 +1,49 @@
+yorick-gl
+---------
+
+OpenGL 3D graphics package for yorick, named yorgl.
+
+This package contains a sub-package yiso3d which generates 2D
+isosurfaces given a function on an arbitrary curvilinear 3D mesh.  The
+configure script will cause yiso3d to be built even if OpenGL cannot
+be found (or you force --no-opengl on the configure command line).
+
+To build the yorgl package:
+
+./configure
+make
+
+To install in Y_HOME:
+
+make install
+
+To uninstall:
+
+make uninstall
+
+If you are building on multiple platforms, do not forget to run the
+configure script before each build.
+
+Options for the configure script:
+
+--yorick=/path/to/yorick
+  exact name of yorick executable if yorick is not on PATH env variable
+--prefix=/top/level/path
+  directory containing include/, lib/ subdirectories with OpenGL,
+  unnecessary if this is /usr, /usr/local, or /sw
+--glinc=/path/to/opengl/headers
+  directory containing the GL/ subdirectory,
+  unnecessary if this is /usr/include, /usr/local/include, or /sw/include
+--gllib=/path/to/opengl/libs
+  unnecessary if this is /usr/lib, /usr/local/lib, or /sw/lib
+--no-opengl
+  build only yiso3d, do not even look for OpenGL
+
+--------------------------------------------------------------------------
+PROBLEMS
+--------
+
+1. Linux NVIDIA drivers may fail to replace Mesa gl.h but do replace
+   Mesa libGL.  Be sure to use --glinc to force correct gl.h, e.g.-
+
+   ./configure --glinc=/usr/share/doc/NVIDIA_GLX-1.0/include

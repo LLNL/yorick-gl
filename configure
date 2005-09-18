@@ -1,0 +1,251 @@
+#!/bin/sh
+# $Id: configure,v 1.1 2005-09-18 22:08:03 dhmunro Exp $
+
+debug=no
+
+have_gl=no
+skip_gl=no
+distclean=no
+yorick=yorick
+prefix=
+glinc=
+gllib=
+
+if test "$#" -gt 0; then
+  for opt in "$@"; do
+    case "$opt" in
+      --yorick=*)
+        yorick=`echo $opt | sed -e s/--yorick=//`
+        ;;
+      --prefix=*)
+        prefix=`echo $opt | sed -e s/--prefix=//`
+        ;;
+      --glinc=*)
+        glinc=`echo $opt | sed -e s/--glinc//`
+        ;;
+      --gllib=*)
+        gllib=`echo $opt | sed -e s/--gllib=//`
+        ;;
+      --no-opengl)
+        skip_gl=yes
+        ;;
+      --distclean)
+        distclean=yes
+        ;;
+      --debug)
+        debug=yes
+        ;;
+      *)
+        echo configure: unrecognized option
+        echo options:
+        echo '--yorick=/path/to/yorick'
+        echo '--prefix=/path/to/opengl/include_and_lib_dirs'
+        echo '--glinc=/path/to/opengl/headers    (for -I)'
+        echo '--gllib=/path/to/opengl/libs       (for -L)'
+        echo '--no-opengl            (skip OpenGL, build yiso3d only)'
+        exit 1
+        ;;
+    esac
+  done
+fi
+if test -n "$prefix"; then
+  if test -z "$glinc"; then glinc="$prefix/include"; fi
+  if test -z "$gllib"; then gllib="$prefix/lib"; fi
+fi
+
+rm -f cfg* ycode.* yinit.* ywrap.*
+rm -f core a.out *.o *.a *.so *.sl *.dylib *.dll *~ '#'*
+rm -f yorgl Makegl
+
+if test $distclean = yes; then
+  rm -f Makefile.tmp
+  mv Makefile Makefile.tmp
+  sed <Makefile.tmp >Makefile -e 's/^Y_MAKEDIR=.*/Y_MAKEDIR=/' -e 's/^Y_EXE=.*/Y_EXE=/' -e 's/^Y_EXE_PKGS=.*/Y_EXE_PKGS=/' -e 's/^Y_EXE_HOME=.*/Y_EXE_HOME=/' -e 's/^Y_EXE_SITE=.*/Y_EXE_SITE=/'
+  rm -f Makefile.tmp
+  exit 0
+fi
+
+echo ""
+echo "  ============= begin OpenGL for GLX configuration =============="
+echo ""
+
+# update Makefile to point to the currect yorick
+"$yorick" -batch make.i
+
+# read assorted build flags from Y_HOME/Make.cfg
+#
+Y_MAKEDIR=`grep '^Y_MAKEDIR=' ./Makefile | sed -e s/Y_MAKEDIR=//`
+# try to handle escaped blanks in Y_MAKEDIR
+Y_MAKEDIR=`echo $Y_MAKEDIR | sed -e 's/\\\\ / /g'`
+make_cfg="$Y_MAKEDIR/Make.cfg"
+CC=`grep '^CC=' "$make_cfg" | sed -e s/CC=//`
+CFLAGS=`grep '^Y_CFLAGS=' "$make_cfg" | sed -e s/Y_CFLAGS=//`
+LDFLAGS=`grep '^Y_LDFLAGS=' "$make_cfg" | sed -e s/Y_LDFLAGS=//`
+MATHLIB=`grep '^MATHLIB=' "$make_cfg" | sed -e s/MATHLIB=//`
+xinc=`grep '^XINC=' "$make_cfg" | sed -e s/XINC=//`
+xlib=`grep '^XLIB=' "$make_cfg" | sed -e s/XLIB=//`
+OGLXW=`grep '^PLAY_DIRS=.*win' "$make_cfg"`
+if test -n "$OGLXW"; then
+  OGLXW=oglw.o
+  glibs="-lopengl32 -lgdi32"
+  gincs=
+  have_gl=yes
+  skip_gl=yes
+else
+  OGLXW=oglx.o
+fi
+
+# search for a usable OpenGL
+gmesapix=
+if test $skip_gl != yes; then
+  gllist=" \
+    /usr/X11R6/include \
+    /usr/local/include"
+
+  cat >cfg.c <<EOF
+#include <GL/glx.h>
+#include <GL/gl.h>
+#ifndef USE_MESA_PIXMAPS
+# undef glXCreateGLXPixmapMESA
+# define glXCreateGLXPixmapMESA(d, v, p, c) glXCreateGLXPixmap(d, v, p)
+#endif
+static int attr[] = {
+  GLX_RGBA, GLX_DOUBLEBUFFER, GLX_RED_SIZE, 1, GLX_GREEN_SIZE, 1,
+  GLX_BLUE_SIZE, 1, None };
+int main(int argc, char *argv[])
+{
+  Display *dpy = XOpenDisplay("nosuchserver:0.0");
+  XVisualInfo *vi = glXChooseVisual(dpy, DefaultScreen(dpy), attr);
+  GLXContext cx = glXCreateContext(dpy, vi, 0, GL_TRUE);
+  Window win = XCreateSimpleWindow(dpy, RootWindow(dpy, vi->screen),
+                                   0,0, 100,100, 4, 0, 0);
+  Drawable d = glXCreateGLXPixmapMESA(dpy, vi, win,
+                                      DefaultColormap(dpy, vi->screen));
+  glXDestroyGLXPixmap(dpy, d);
+  glXMakeCurrent(dpy, win, cx);
+  glClearColor(1,1,0,1);
+  glClear(GL_COLOR_BUFFER_BIT);
+  glFlush();
+  XCloseDisplay(dpy);
+  return 0;
+}
+EOF
+
+  xfound=no
+  if $CC $CFLAGS $glinc $xinc -c cfg.c >cfg.1a 2>&1; then
+    xfound=yes
+  else
+    for d in $gllist; do
+      if test -r $d/GL/glx.h; then
+        glinc=-I$d
+        if $CC $CFLAGS $glinc $xinc -c cfg.c >cfg.1b 2>&1; then
+  	  xfound=yes
+          gllib=`echo -L$d | sed s/include/lib/`
+          if test $debug = no; then rm -f cfg.1a; fi
+        fi
+        break
+      fi
+    done
+  fi
+  if test -z "$xinc"; then
+    gincs="$glinc"
+  else
+    gincs="$glinc $xinc"
+  fi
+  if test $xfound = yes; then
+    args="$CFLAGS $gincs $LDFLAGS -o cfg cfg.c"
+    xlibs="$xlib -lXext -lX11"
+    xlibm="$xlibs $MATHLIB"
+    for gll in -lGL -lMesaGL; do
+      glibs="$xlib $gll -lXext -lX11"
+      if $CC $args $glibs $MATHLIB >cfg.1c 2>&1; then
+        xfound=both
+      elif test -n "$gllib" && \
+           $CC $args $gllib $gll $xlibm >cfg.1c 2>&1; then
+        glibs="$gllib $gll $xlibs"
+        xfound=both
+      else
+        glibs="$xlib -lX11"
+        gllist=`echo $gllist | sed s/include/lib/g`
+        for d in $gllist; do
+  	  xall=`echo $d/libX11*`
+          if test "$xall" != $d/'libX11*'; then
+            gllib=-L$d
+            if $CC $args $gllib $gll $xlibm >cfg.1d 2>&1; then
+              glibs="$gllib $gll $xlibs"
+  	      xfound=both
+              if test $debug = no; then rm -f cfg.1c; fi
+            fi
+            break
+          fi
+        done
+      fi
+      if test $xfound = both; then
+        break
+      fi
+    done
+    if test $xfound = both; then
+      have_gl=yes
+      echo "found OpenGL, GL headers and GL+GLX libraries"
+      echo "  - using GL+X11 header switch ${gincs:-[none]}"
+      echo "  - using GL+X11 loader switch ${glibs:-[none]}"
+      if $CC -DUSE_MESA_PIXMAPS $args $glibs $MATHLIB >/dev/null 2>&1; then
+        gmesapix=-DUSE_MESA_PIXMAPS
+        echo "  - using glXCreateGLXPixmapMESA"
+      fi
+    fi
+  fi
+
+  if test $have_gl != yes; then
+    echo ""
+    echo "***********WARNING*********** GLX not found"
+    echo ""
+  fi
+
+  rm -f cfg cfg.c cfg.o
+  for f in cfg.[0-9]*; do
+    if grep ... $f >/dev/null 2>&1; then   # or use test -s $f ?
+      echo "WARNING - check compiler message in $f"
+    else # remove empty files
+      rm -f $f
+    fi
+  done
+fi
+
+if test $have_gl = yes; then
+  PKG_I='$(YISO_PKG_I) $(YGL_PKG_I)'
+  OBJS='$(YISO_OBJS) $(YGL_OBJS)'
+  PKG_DEPLIBS="$glibs"
+  PKG_CFLAGS="$gincs"
+  PKG_I_START="yiso3d.i yorgl.i"
+  PKG_I_EXTRA='$(YISO_I) $(YGL_I)'
+else
+  PKG_I='$(YISO_PKG_I)'
+  OBJS='$(YISO_OBJS)'
+  PKG_DEPLIBS=
+  PKG_CFLAGS=
+  PKG_I_START=yiso3d.i
+  PKG_I_EXTRA='$(YISO_I)'
+fi
+
+curdate=`date`
+cursystem=`uname -a`
+cat >Makegl <<EOF
+# Makegl configure results for yorick-gl
+# generated by yorick-gl configure script on $curdate
+# $cursystem
+
+PKG_I=$PKG_I
+OBJS=$OBJS
+OGLXW=$OGLXW
+D_MESA_PIXMAPS=$gmesapix
+PKG_DEPLIBS=$PKG_DEPLIBS
+PKG_CFLAGS=$PKG_CFLAGS
+PKG_LDFLAGS=
+PKG_I_START=$PKG_I_START
+PKG_I_EXTRA=$PKG_I_EXTRA
+EOF
+
+echo "created Makegl"
+echo ""
+echo "  ============== end OpenGL for GLX configuration ==============="
