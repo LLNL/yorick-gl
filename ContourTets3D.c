@@ -1,5 +1,5 @@
 /*
- * $Id: ContourTets3D.c,v 1.1 2005-09-18 22:07:57 dhmunro Exp $
+ * $Id: ContourTets3D.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
  * Iso-surface routines based on a 6 tetrahedron decomposition of
  * each hexahedral cell.
  */
@@ -10,6 +10,7 @@
  */
 
 #include "Contour3D.h"
+#include "pstdlib.h"
 #include <stdlib.h>
 #include <math.h>
 
@@ -2051,8 +2052,8 @@ int ycPrepIsoTet(void)
   /* release storage if necessary */
   if(have_iso_cases) {
     for(jj= 0; jj < 256; jj++) {
-      if(iso_cases[jj].lens) free(iso_cases[jj].lens);
-      if(iso_cases[jj].edges) free(iso_cases[jj].edges);
+      if(iso_cases[jj].lens) p_free(iso_cases[jj].lens);
+      if(iso_cases[jj].edges) p_free(iso_cases[jj].edges);
     }
     have_iso_cases= 0;
   }
@@ -2070,14 +2071,14 @@ int ycPrepIsoTet(void)
     nstrip= tetiso_zone( the_strips );
     iso_cases[jj].nStrip= nstrip;
     if(nstrip) {
-      lens= (long *) malloc(nstrip*sizeof(long));
+      lens= (long *) p_malloc(nstrip*sizeof(long));
       iso_cases[jj].lens= lens;
       lentot= 0;
       for(ii= 0; ii < nstrip; ii++) {
         lens[ii]= the_strips[ii].nvert;
         lentot += lens[ii];
       }
-      edges= (long *) malloc(lentot*sizeof(long));
+      edges= (long *) p_malloc(lentot*sizeof(long));
       iso_cases[jj].edges= edges;
       now= 0;
       for(ii= 0; ii < nstrip; ii++) {

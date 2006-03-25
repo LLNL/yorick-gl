@@ -1,5 +1,5 @@
 /*
- * $Id: glx11setup.c,v 1.1 2005-09-18 22:07:53 dhmunro Exp $
+ * $Id: glx11setup.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -11,6 +11,7 @@
 #include "glMouse.h"
 #include "glBasic.h"
 #include "binio.h"
+#include "pstdlib.h"
 #include <stdio.h>
 
 extern void g_disconnect(p_scr *s);
@@ -138,7 +139,7 @@ glWinProp *yglMakWin(char *displayName, int w, int h, char *title)
 
   scr_gl = g_connect(displayName);
   if (!scr_gl) return 0;
-  theWin3d= (glWinProp *) malloc(sizeof(glWinProp));
+  theWin3d= (glWinProp *) p_malloc(sizeof(glWinProp));
   if(!theWin3d) return 0;
   theInner= &(theWin3d->innerWin);
   theWin3d->inner= theInner;
@@ -153,7 +154,7 @@ glWinProp *yglMakWin(char *displayName, int w, int h, char *title)
                     (gist_input_hint?0:P_NOKEY) | P_RGBMODEL, theWin3d);
   if (!top_win) {
     glCurrWin3d= oldWin3d;
-    free(theWin3d);
+    p_free(theWin3d);
     return 0;
   }
   gl_win = p_glcreate(top_win, w, h, 0, 0, theInner);
@@ -162,7 +163,7 @@ glWinProp *yglMakWin(char *displayName, int w, int h, char *title)
     glCurrWin3d= oldWin3d;
     top_win = 0;
     p_destroy(w);
-    free(theWin3d);
+    p_free(theWin3d);
     return 0;
   }
   theWin3d->gl_win= gl_win;
@@ -207,7 +208,7 @@ int shutdown3d(glWinProp *theWin3d)
   /* In Windows, the 3D window might have been destroyed 
      by an asynchronous on_destroy() triggered by
      the p_gldestroy() call. Protect against a double free() */
-  free(theWin3d);
+  p_free(theWin3d);
   glWin3dList[num]= 0;
   return 0;  /* indicate success */
 }

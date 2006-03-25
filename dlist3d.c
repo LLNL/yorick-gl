@@ -1,5 +1,5 @@
 /*
- * $Id: dlist3d.c,v 1.1 2005-09-18 22:07:43 dhmunro Exp $
+ * $Id: dlist3d.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
  * Implement functions used for manipulating 3D display lists.
  * The functions in this file maintains the display list for the 3D graphics 
  * package in Yorick.
@@ -19,6 +19,7 @@
 #include "glStrips.h"
 #include "glWrappers.h"
 #include "ydata.h"
+#include "pstdlib.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -70,8 +71,8 @@ void yglClearCachedList3d(void)
   while(yListCachedHead) {
     elem= yListCachedHead;
     yListCachedHead= yListCachedHead->next;
-    free(elem->data);
-    free(elem);
+    p_free(elem->data);
+    p_free(elem);
   }
   /* the OpenGL display list is now out-of-date */
   if(glCurrWin3d && (glCurrWin3d->seq_num <= glCurrWin3d->list_num) ) {
@@ -87,8 +88,8 @@ void yglClearDirectList3d(void)
   while(yListDirectHead) {
     elem= yListDirectHead;
     yListDirectHead= yListDirectHead->next;
-    free(elem->data);
-    free(elem);
+    p_free(elem->data);
+    p_free(elem);
   }
 }
 
@@ -244,7 +245,7 @@ yList3d_Elem *yglNewCachedList3dElem(void)
   
   /* add another element at the head of the display list (it is
      a linked list) */
-  elem= (yList3d_Elem *) malloc(sizeof(yList3d_Elem));
+  elem= (yList3d_Elem *) p_malloc(sizeof(yList3d_Elem));
   elem->next= yListCachedHead;
   yListCachedHead= elem;
   return elem;
@@ -256,7 +257,7 @@ yList3d_Elem *yglNewDirectList3dElem(void)
   
   /* add another element at the head of the display list (it is
      a linked list) */
-  elem= (yList3d_Elem *) malloc(sizeof(yList3d_Elem));
+  elem= (yList3d_Elem *) p_malloc(sizeof(yList3d_Elem));
   elem->next= yListDirectHead;
   yListDirectHead= elem;
   return elem;
@@ -386,7 +387,7 @@ void yglPolys3d(long npolys, long *len, double *xyz, double *norm,
     nvert += len[i];
   }
   size= sizeof(yPoly3dData)+sizeof(long)*npolys+sizeof(float)*(2*3*nvert+3*npolys);
-  data= (yPoly3dData *) malloc(size);
+  data= (yPoly3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->npolys= npolys;
@@ -435,7 +436,7 @@ void yglGlyphs3d(long nglyph, double *origin, double *scal,
   elem->func= yglDrawGlyphs3d;
   /* compute the size of the data structure plus all data */
   size= sizeof(yGlyph3dData)+sizeof(float)*nglyph*(3+1+1+1+3);
-  data= (yGlyph3dData *) malloc(size);
+  data= (yGlyph3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nglyph= nglyph;
@@ -482,7 +483,7 @@ void yglCells3d(long nx, long ny, double *corners,
   elem->func= yglDrawCells3d;
   /* compute the size of the data structure plus all data */
   size= sizeof(yCell3dData)+sizeof(float)*3*nx*ny+sizeof(float)*(3*3+3);
-  data= (yCell3dData *) malloc(size);
+  data= (yCell3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nx= nx;
@@ -529,7 +530,7 @@ void yglPlm3d(long nx, long ny, double *xyz, double *colr)
   
   /* compute the size of the data structure plus all data */
   size= sizeof(yPlm3dData)+sizeof(float)*3*nx*ny+sizeof(float)*3;
-  data= (yPlm3dData *) malloc(size);
+  data= (yPlm3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nx= nx;
@@ -570,7 +571,7 @@ void yglPlf3d(long nx, long ny, double *xyz, double *colr)
 
   /* compute the size of the data structure plus all data */
   size= sizeof(yPlf3dData)+sizeof(float)*3*nx*ny+sizeof(float)*3*(nx-1)*(ny-1);
-  data= (yPlf3dData *) malloc(size);
+  data= (yPlf3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nx= nx;
@@ -612,7 +613,7 @@ void yglSurf3d(long do_alpha, long nx, long ny, double *xyz,
   
   /* compute the size of the data structure plus all data */
   size= sizeof(ySurf3dData)+sizeof(float)*2*3*nx*ny+sizeof(float)*3;
-  data= (ySurf3dData *) malloc(size);
+  data= (ySurf3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->do_alpha= do_alpha;
@@ -656,7 +657,7 @@ void yglColrsurf3d(long do_alpha, long nx, long ny, double *xyz,
   
   /* compute the size of the data structure plus all data */
   size= sizeof(ySurf3dData)+sizeof(float)*2*3*nx*ny+sizeof(float)*3*nx*ny;
-  data= (ySurf3dData *) malloc(size);
+  data= (ySurf3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->do_alpha= do_alpha;
@@ -701,7 +702,7 @@ void yglLines3d(long nvert, double *xyz, double *colr)
   
   /* compute the size of the data structure plus all data */
   size= sizeof(yLines3dData)+sizeof(float)*3*nvert+sizeof(float)*3;
-  data= (yLines3dData *) malloc(size);
+  data= (yLines3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nvert= nvert;
@@ -741,7 +742,7 @@ void yglPoints3d(long nvert, double *xyz, double *colr)
   
   /* compute the size of the data structure plus all data */
   size= sizeof(yPoints3dData)+sizeof(float)*3*nvert+sizeof(float)*3*nvert;
-  data= (yPoints3dData *) malloc(size);
+  data= (yPoints3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nvert= nvert;
@@ -812,7 +813,7 @@ void yglTstrips3d(long nstrips, long *len, double *xyz,
 	}
   }
   size += sizeof(float)*nrmsiz;
-  data= (yTstrips3dData *) malloc(size);
+  data= (yTstrips3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nstrips= nstrips;
@@ -908,7 +909,7 @@ void yglQstrips3d(long nstrips, long *len, double *xyz,
     }
   }
   size += sizeof(float)*nrmsiz;
-  data= (yQstrips3dData *) malloc(size);
+  data= (yQstrips3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nstrips= nstrips;
@@ -987,7 +988,7 @@ void yglTstripsndx3d(long nstrips, long numedg, long ntri,
   /* compute the size of the data structure plus all data */
   size= sizeof(yTstripsNdx3dData)+sizeof(float)*2*3*numedg+sizeof(float)*colrsiz*ntri;
   size += sizeof(long)*nvert+sizeof(long)*nstrips;
-  data= (yTstripsNdx3dData *) malloc(size);
+  data= (yTstripsNdx3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nstrips= nstrips;
@@ -1062,7 +1063,7 @@ void yglTarray3d(long ntri, double *xyz, double *norm, double *colr,
   }
   /* compute the size of the data structure plus all data */
   size= sizeof(yTarray3dData)+sizeof(float)*9*2*ntri+sizeof(float)*colrsiz*ncolr;
-  data= (yTarray3dData *) malloc(size);
+  data= (yTarray3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->ntri= ntri;
@@ -1131,7 +1132,7 @@ void yglQarray3d(long nquad, double *xyz, double *norm, double *colr,
   }
   /* compute the size of the data structure plus all data */
   size= sizeof(yQarray3dData)+sizeof(float)*12*2*nquad+sizeof(float)*colrsiz*ncolr;
-  data= (yQarray3dData *) malloc(size);
+  data= (yQarray3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nquad= nquad;
@@ -1185,7 +1186,7 @@ void yglTivarray3d(long ntri, long nvert, long *ptndx, double *xyz,
   numndx= 3*ntri;
   /* compute the size of the data structure plus all data */
   size= sizeof(yTivarray3dData)+sizeof(float)*(3+3+4)*nvert+sizeof(dptndx[0])*numndx;
-  data= (yTivarray3dData *) malloc(size);
+  data= (yTivarray3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->ntri= ntri;
@@ -1275,7 +1276,7 @@ void yglTvarray3d(long ntri, long nvert, long do_alpha, long cpervrt, long *ptnd
   } else {
     size += sizeof(float)*clrsiz;
   }
-  data= (yTvarray3dData *) malloc(size);
+  data= (yTvarray3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->ntri= ntri;
@@ -1390,7 +1391,7 @@ void yglTex3d(float ds, double *origin, double *boxsiz)
   
   /* compute the size of the data structure plus all data */
   size= sizeof(yTex3dData)+sizeof(double)*2*3;
-  data= (yTex3dData *) malloc(size);
+  data= (yTex3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->ds= ds;
@@ -1433,7 +1434,7 @@ void yglTexcell2d(long nx, long ny, long nz, double *znsiz, char *texval)
   
   /* compute the size of the data structure plus all data */
   size= sizeof(yTexcell2dData)+sizeof(double)*3+sizeof(char)*4*nx*ny*nz;
-  data= (yTexcell2dData *) malloc(size);
+  data= (yTexcell2dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nx= nx;
@@ -1479,7 +1480,7 @@ void yglPlpix3d(long nx, long ny, char *pix)
   elem->func= yglDrawPix3d;
   /* compute the size of the data structure plus all data */
   size= sizeof(yPix3dData)+sizeof(char)*3*nx*ny;
-  data= (yPix3dData *) malloc(size);
+  data= (yPix3dData *) p_malloc(size);
   elem->data= data;
   /* set all elements of the data structure, including pointers into the data block */
   data->nx= nx;

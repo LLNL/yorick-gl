@@ -1,5 +1,5 @@
 /*
- * $Id: glStrips.c,v 1.1 2005-09-18 22:07:47 dhmunro Exp $
+ * $Id: glStrips.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -10,6 +10,7 @@
 #include "glfunc.h"
 #include "glStrips.h"
 #include "glWrappers.h"
+#include "pstdlib.h"
 #include <math.h>
 #include <stdlib.h>
 
@@ -607,9 +608,9 @@ void yglTstripSmArr(long nvert, float *xyz, float *norm, float *colr)
   /* make an array big enough to hold all the colors, normals, and
      vertices for the quad strip */
   ind_colr= ind_vert= 0;
-  arr_colr= (float *)malloc(3*nvert*sizeof(float));
-  arr_norm= (float *)malloc(3*nvert*sizeof(float));
-  arr_vert= (float *)malloc(3*nvert*sizeof(float));
+  arr_colr= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_norm= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(3*nvert*sizeof(float));
   arr_colr[ind_colr++]= colr[0];
   arr_colr[ind_colr++]= colr[1];
   arr_colr[ind_colr++]= colr[2];
@@ -645,9 +646,9 @@ void yglTstripSmArr(long nvert, float *xyz, float *norm, float *colr)
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-  free(arr_colr);
-  free(arr_norm);
-  free(arr_vert);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
   CHEK_ERROR("yglTstripSmArr");
 }
 
@@ -663,9 +664,9 @@ void yglQstripSmArr(long nvert, float *xyz, float *norm, float *colr)
   /* make an array big enough to hold all the colors, normals, and
      vertices for the quad strip */
   ind_colr= ind_vert= 0;
-  arr_colr= (float *)malloc(6*nvert*sizeof(float));
-  arr_norm= (float *)malloc(6*nvert*sizeof(float));
-  arr_vert= (float *)malloc(6*nvert*sizeof(float));
+  arr_colr= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_norm= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(6*nvert*sizeof(float));
   arr_colr[ind_colr++]= colr[0];
   arr_colr[ind_colr++]= colr[1];
   arr_colr[ind_colr++]= colr[2];
@@ -710,9 +711,9 @@ void yglQstripSmArr(long nvert, float *xyz, float *norm, float *colr)
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-  free(arr_colr);
-  free(arr_norm);
-  free(arr_vert);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
   CHEK_ERROR("yglQstripSmArr");
 }
 
@@ -728,9 +729,9 @@ void yglTstripArr(long nvert, float *xyz, float *norm, float *colr)
   /* make an array big enough to hold all the colors, normals, and
      vertices for the quad strip */
   ind_colr= ind_norm= ind_vert= 0;
-  arr_colr= (float *)malloc(3*nvert*sizeof(float));
-  arr_norm= (float *)malloc(3*nvert*sizeof(float));
-  arr_vert= (float *)malloc(3*nvert*sizeof(float));
+  arr_colr= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_norm= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(3*nvert*sizeof(float));
   arr_colr[ind_colr++]= colr[0];
   arr_colr[ind_colr++]= colr[1];
   arr_colr[ind_colr++]= colr[2];
@@ -772,9 +773,9 @@ void yglTstripArr(long nvert, float *xyz, float *norm, float *colr)
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-  free(arr_colr);
-  free(arr_norm);
-  free(arr_vert);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
   CHEK_ERROR("yglTstripArr");
 }
 
@@ -790,9 +791,9 @@ void yglQstripArr(long nvert, float *xyz, float *norm, float *colr)
   /* make an array big enough to hold all the colors, normals, and
      vertices for the quad strip */
   ind_colr= ind_norm= ind_vert= 0;
-  arr_colr= (float *)malloc(6*nvert*sizeof(float));
-  arr_norm= (float *)malloc(6*nvert*sizeof(float));
-  arr_vert= (float *)malloc(6*nvert*sizeof(float));
+  arr_colr= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_norm= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(6*nvert*sizeof(float));
   arr_colr[ind_colr++]= colr[0];
   arr_colr[ind_colr++]= colr[1];
   arr_colr[ind_colr++]= colr[2];
@@ -843,9 +844,9 @@ void yglQstripArr(long nvert, float *xyz, float *norm, float *colr)
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-  free(arr_colr);
-  free(arr_norm);
-  free(arr_vert);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
   CHEK_ERROR("yglQstripArr");
 }
 
@@ -927,8 +928,8 @@ void yglTstripArrNoLite(long nvert, float *xyz, float *colr)
   /* make an array big enough to hold all the colors and
      vertices for the quad strip */
   ind_colr= ind_vert= 0;
-  arr_colr= (float *)malloc(3*nvert*sizeof(float));
-  arr_vert= (float *)malloc(3*nvert*sizeof(float));
+  arr_colr= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(3*nvert*sizeof(float));
   arr_colr[ind_colr++]= colr[0];
   arr_colr[ind_colr++]= colr[1];
   arr_colr[ind_colr++]= colr[2];
@@ -957,8 +958,8 @@ void yglTstripArrNoLite(long nvert, float *xyz, float *colr)
   /* free up the storage */
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-  free(arr_colr);
-  free(arr_vert);
+  p_free(arr_colr);
+  p_free(arr_vert);
   CHEK_ERROR("yglTstripArrNoLite");
 }
 
@@ -974,8 +975,8 @@ void yglQstripArrNoLite(long nvert, float *xyz, float *colr)
   /* make an array big enough to hold all the colors and
      vertices for the quad strip */
   ind_colr= ind_vert= 0;
-  arr_colr= (float *)malloc(6*nvert*sizeof(float));
-  arr_vert= (float *)malloc(6*nvert*sizeof(float));
+  arr_colr= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(6*nvert*sizeof(float));
   arr_colr[ind_colr++]= colr[0];
   arr_colr[ind_colr++]= colr[1];
   arr_colr[ind_colr++]= colr[2];
@@ -1010,8 +1011,8 @@ void yglQstripArrNoLite(long nvert, float *xyz, float *colr)
   /* free up the storage */
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-  free(arr_colr);
-  free(arr_vert);
+  p_free(arr_colr);
+  p_free(arr_vert);
   CHEK_ERROR("yglQstripArrNoLite");
 }
 

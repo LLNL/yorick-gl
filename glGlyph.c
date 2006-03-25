@@ -1,5 +1,5 @@
 /*
- * $Id: glGlyph.c,v 1.1 2005-09-18 22:07:45 dhmunro Exp $
+ * $Id: glGlyph.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -9,6 +9,7 @@
 #include "glcode.h"
 #include "glfunc.h"
 #include "TriStruct.h"
+#include "pstdlib.h"
 #include <math.h>
 #include <stdlib.h>
 
@@ -108,8 +109,8 @@ void makPyrGlyph(void)
   /* The pyramid is made up of 6 triangles.
      compute and save the coordinates of their vertices. */
   pyramid_glyph.ntri= 6;
-  xyz= (yPoint3D *) malloc(sizeof(yPoint3D)*3*pyramid_glyph.ntri);
-  nrm= (yPoint3D *) malloc(sizeof(yPoint3D)*3*pyramid_glyph.ntri);
+  xyz= (yPoint3D *) p_malloc(sizeof(yPoint3D)*3*pyramid_glyph.ntri);
+  nrm= (yPoint3D *) p_malloc(sizeof(yPoint3D)*3*pyramid_glyph.ntri);
   pyramid_glyph.xyz= xyz;
   pyramid_glyph.nrm= nrm;
   nv= 0;
@@ -233,8 +234,8 @@ void makTetGlyph(void)
   /* The tetrahedron is made up of 4 triangles.
      Compute and save the coordinates of their vertices. */
   tet_glyph.ntri= 4;
-  xyz= (yPoint3D *) malloc(sizeof(yPoint3D)*3*tet_glyph.ntri);
-  nrm= (yPoint3D *) malloc(sizeof(yPoint3D)*3*tet_glyph.ntri);
+  xyz= (yPoint3D *) p_malloc(sizeof(yPoint3D)*3*tet_glyph.ntri);
+  nrm= (yPoint3D *) p_malloc(sizeof(yPoint3D)*3*tet_glyph.ntri);
   tet_glyph.xyz= xyz;
   tet_glyph.nrm= nrm;
   nv= 0;

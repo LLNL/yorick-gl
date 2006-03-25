@@ -1,5 +1,5 @@
 /*
- * $Id: glPolys.c,v 1.1 2005-09-18 22:07:46 dhmunro Exp $
+ * $Id: glPolys.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -9,6 +9,7 @@
 #include "glcode.h"
 #include "glfunc.h"
 #include "glPolys.h"
+#include "pstdlib.h"
 #include <math.h>
 #include <stdlib.h>
 
@@ -104,12 +105,12 @@ void yglPolysArr(long npoly, long *nverts, float *xyz, float *norm,
   /* make an array big enough to hold all the colors, normals, and
      vertices for the polygon list */
 #ifdef USE_ALPHA
-  arr_colr= (float *)malloc(12*ntri*sizeof(float));
+  arr_colr= (float *)p_malloc(12*ntri*sizeof(float));
 #else
-  arr_colr= (float *)malloc(9*ntri*sizeof(float));
+  arr_colr= (float *)p_malloc(9*ntri*sizeof(float));
 #endif
-  arr_norm= (float *)malloc(9*ntri*sizeof(float));
-  arr_vert= (float *)malloc(9*ntri*sizeof(float));
+  arr_norm= (float *)p_malloc(9*ntri*sizeof(float));
+  arr_vert= (float *)p_malloc(9*ntri*sizeof(float));
   ind= 0;
 #ifdef USE_ALPHA
   indc= 0;
@@ -190,9 +191,9 @@ void yglPolysArr(long npoly, long *nverts, float *xyz, float *norm,
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-  free(arr_colr);
-  free(arr_norm);
-  free(arr_vert);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
 #ifdef USE_ALPHA
   glDisable(GL_BLEND);
 #endif
@@ -233,11 +234,11 @@ void yglPolysArrNoLite(long npoly, long *nverts, float *xyz,
   /* make an array big enough to hold all the colors, normals, and
      vertices for the polygon list */
 #ifdef USE_ALPHA
-  arr_colr= (float *)malloc(12*ntri*sizeof(float));
+  arr_colr= (float *)p_malloc(12*ntri*sizeof(float));
 #else
-  arr_colr= (float *)malloc(9*ntri*sizeof(float));
+  arr_colr= (float *)p_malloc(9*ntri*sizeof(float));
 #endif
-  arr_vert= (float *)malloc(9*ntri*sizeof(float));
+  arr_vert= (float *)p_malloc(9*ntri*sizeof(float));
   ind= 0;
 #ifdef USE_ALPHA
   indc= 0;
@@ -305,8 +306,8 @@ void yglPolysArrNoLite(long npoly, long *nverts, float *xyz,
   /* free up the storage */
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-  free(arr_colr);
-  free(arr_vert);
+  p_free(arr_colr);
+  p_free(arr_vert);
 #ifdef USE_ALPHA
   glDisable(GL_BLEND);
 #endif
@@ -431,12 +432,12 @@ void yglPolysSmArr(long npoly, long *nverts, float *xyz, float *norm,
   /* make an array big enough to hold all the colors, normals, and
      vertices for the polygon list */
 #ifdef USE_ALPHA
-  arr_colr= (float *)malloc(12*ntri*sizeof(float));
+  arr_colr= (float *)p_malloc(12*ntri*sizeof(float));
 #else
-  arr_colr= (float *)malloc(9*ntri*sizeof(float));
+  arr_colr= (float *)p_malloc(9*ntri*sizeof(float));
 #endif
-  arr_norm= (float *)malloc(9*ntri*sizeof(float));
-  arr_vert= (float *)malloc(9*ntri*sizeof(float));
+  arr_norm= (float *)p_malloc(9*ntri*sizeof(float));
+  arr_vert= (float *)p_malloc(9*ntri*sizeof(float));
   ind= 0;
 #ifdef USE_ALPHA
   indc= 0;
@@ -517,9 +518,9 @@ void yglPolysSmArr(long npoly, long *nverts, float *xyz, float *norm,
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-  free(arr_colr);
-  free(arr_norm);
-  free(arr_vert);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
 #ifdef USE_ALPHA
   glDisable(GL_BLEND);
 #endif

@@ -1,5 +1,5 @@
 /*
- * $Id: gltexture.c,v 1.1 2005-09-18 22:07:53 dhmunro Exp $
+ * $Id: gltexture.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
  * This file contains functions that use OpenGL texture capabilities.
  * A significant application is interactive volume visualization
  * using either 2D or 3D textures (prefereable 3D).
@@ -17,6 +17,7 @@
 #include "gl3dtex.h"
 #include "glcubetex.h"
 #include "Contour3D.h"
+#include "pstdlib.h"
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
@@ -254,8 +255,8 @@ void yglTexcells(long nx, long ny, long nz, double delta[3],
   nh= nnx;
   nv= nny;
 #endif
-  newTexImage= (unsigned char *)malloc(sizeof(unsigned char)*4*nh*nv);
-  subImage= (unsigned char *)malloc(sizeof(unsigned char)*4*nhs*nvs);
+  newTexImage= (unsigned char *)p_malloc(sizeof(unsigned char)*4*nh*nv);
+  subImage= (unsigned char *)p_malloc(sizeof(unsigned char)*4*nhs*nvs);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nh, nv, 0, GL_RGBA, 
                GL_UNSIGNED_BYTE, newTexImage);
 
@@ -528,8 +529,8 @@ void yglTexcells(long nx, long ny, long nz, double delta[3],
 #endif
 
   glDeleteTextures(1, &texName);
-  free(newTexImage);
-  free(subImage);
+  p_free(newTexImage);
+  p_free(subImage);
   yglEndTex2d();
 }
 
@@ -634,8 +635,8 @@ void yglTexcell2(long nx, long ny, long nz, double delta[3],
 #endif
   glGenTextures(1, &texName);
   glBindTexture(GL_TEXTURE_2D, texName);
-  newTexImage= (unsigned char *)malloc(sizeof(unsigned char)*4*nh*nv);
-  subImage= (unsigned char *)malloc(sizeof(unsigned char)*4*nhs*nvs);
+  newTexImage= (unsigned char *)p_malloc(sizeof(unsigned char)*4*nh*nv);
+  subImage= (unsigned char *)p_malloc(sizeof(unsigned char)*4*nhs*nvs);
   {
     int err;
     const GLubyte *errstr;
@@ -941,8 +942,8 @@ void yglTexcell2(long nx, long ny, long nz, double delta[3],
 #endif
 
   glDeleteTextures(1, &texName);
-  free(newTexImage);
-  free(subImage);
+  p_free(newTexImage);
+  p_free(subImage);
   yglEndTex2d();
 }
 
@@ -1116,12 +1117,12 @@ void yglLdTex3d(long nx, long ny, long nz, unsigned char *tex)
   if(texImage3d) {
     /* use the previous array if it was the same size */
     if(nx3d != n2x || ny3d != n2y || nz3d != n2z) {
-      free(texImage3d);
+      p_free(texImage3d);
       nx3d= n2x;
       ny3d= n2y;
       nz3d= n2z;
       tex_siz= sizeof(unsigned char)*4*nx3d*ny3d*nz3d;
-      texImage3d= (unsigned char *)malloc(tex_siz);
+      texImage3d= (unsigned char *)p_malloc(tex_siz);
     }
   } else {
     /* no existing texture, so make a new one */
@@ -1129,7 +1130,7 @@ void yglLdTex3d(long nx, long ny, long nz, unsigned char *tex)
     ny3d= n2y;
     nz3d= n2z;
     tex_siz= sizeof(unsigned char)*4*nx3d*ny3d*nz3d;
-    texImage3d= (unsigned char *)malloc(tex_siz);
+    texImage3d= (unsigned char *)p_malloc(tex_siz);
   }
   for(k= 0; k < nz; k++) {
     for(j= 0; j < ny; j++) {
@@ -1319,14 +1320,14 @@ void yglTex3dbox(double ds, double *origin, double *len)
   facz= fracz3d/len[2];
 
   if(!tris_tex3d) {
-    tris_tex3d= (TriArrayGrp *) malloc(sizeof(TriArrayGrp));
+    tris_tex3d= (TriArrayGrp *) p_malloc(sizeof(TriArrayGrp));
     tris_tex3d->next= 0;
-    tris_tex3d->cellIDs= (long *) malloc(maxtri*sizeof(long));
-    tris_tex3d->xyzverts= (yPoint3D *) malloc(3*maxtri*sizeof(yPoint3D));
-    tris_tex3d->normals= (yPoint3D *) malloc(3*maxtri*sizeof(yPoint3D));
+    tris_tex3d->cellIDs= (long *) p_malloc(maxtri*sizeof(long));
+    tris_tex3d->xyzverts= (yPoint3D *) p_malloc(3*maxtri*sizeof(yPoint3D));
+    tris_tex3d->normals= (yPoint3D *) p_malloc(3*maxtri*sizeof(yPoint3D));
   }
-  verts= (float *) malloc(sizeof(float)*3*3*maxtri);
-  texverts= (float *) malloc(sizeof(float)*3*3*maxtri);
+  verts= (float *) p_malloc(sizeof(float)*3*3*maxtri);
+  texverts= (float *) p_malloc(sizeof(float)*3*3*maxtri);
   dverts= tris_tex3d->xyzverts;
 
   s0= glCurrWin3d->view[0]*origin[0]+glCurrWin3d->view[1]*origin[1]+glCurrWin3d->view[2]*origin[2];

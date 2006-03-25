@@ -1,5 +1,5 @@
 /*
- * $Id: TriUtil.c,v 1.1 2005-09-18 22:07:41 dhmunro Exp $
+ * $Id: TriUtil.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
  * This file contains utility functions for manipulating lists
  * of triangle arrays and strips
  */
@@ -15,6 +15,7 @@
 #include "glWrappers.h"
 #include "glcode.h"
 #include "glfunc.h"
+#include "pstdlib.h"
 
 typedef struct entry entry;
 struct entry {
@@ -214,7 +215,7 @@ void yglDoSortTriNdx3d(TriVertexGrp *oldtri, long *newptndx)
   ntri= oldtri->numTri;
   oldxyz= oldtri->xyzverts;
   oldndx= oldtri->ptndx;
-  dist= (entry *) malloc(ntri*sizeof(entry));
+  dist= (entry *) p_malloc(ntri*sizeof(entry));
   for(i= 0; i < ntri; i++) {
     dist[i].ndx= i;
     base= 3*i;
@@ -235,7 +236,7 @@ void yglDoSortTriNdx3d(TriVertexGrp *oldtri, long *newptndx)
 	newptndx[base+1]= oldndx[ndx+1];
 	newptndx[base+2]= oldndx[ndx+2];
   }
-  free(dist);
+  p_free(dist);
 }
 
 long yglSizeTriArrays3d(TriArrayGrp *list)
@@ -413,7 +414,7 @@ void yglDoSortTri3d(long colrtyp, TriArrayGrp *oldtri, TriArrayGrp *newtri)
      of each triangle */
   ntri= oldtri->numTri;
   oldxyz= oldtri->xyzverts;
-  dist= (entry *) malloc(ntri*sizeof(entry));
+  dist= (entry *) p_malloc(ntri*sizeof(entry));
   for(i= 0; i < ntri; i++) {
     dist[i].ndx= i;
     base= 3*i;
@@ -471,7 +472,7 @@ void yglDoSortTri3d(long colrtyp, TriArrayGrp *oldtri, TriArrayGrp *newtri)
       cbase += 3;
 	}
   }
-  free(dist);
+  p_free(dist);
 }
 
 void myqsort(entry v[], long left, long right)
