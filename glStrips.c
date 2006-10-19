@@ -1,5 +1,5 @@
 /*
- * $Id: glStrips.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
+ * $Id: glStrips.c,v 1.3 2006-10-19 14:48:19 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -17,24 +17,36 @@
 static void yglTstripsSmNoArrAlpha(long nstrip, long *len, float *xyz, 
                                    float *norm, float *colr);
 static void yglTstripSmNoArr(long nvert, float *xyz, float *norm, float *colr);
-static void yglQstripsSmNoArrAlpha(long nstrip, long *len, float *xyz, 
-                                   float *norm, float *colr);
-static void yglQstripSmNoArr(long nvert, float *xyz, float *norm, float *colr);
 static void yglTstripNoArrNoLiteAlpha(long nvert, float *xyz, float *colr);
 static void yglTstripArrNoLite(long nvert, float *xyz, float *colr);
+static void yglTstripArrNoLiteAlpha(long nvert, float *xyz, float *colr);
 static void yglTstripNoArrNoLite(long nvert, float *xyz, float *colr);
 static void yglTstripSmArr(long nvert, float *xyz, float *norm, float *colr);
+static void yglTstripSmArrAlpha(long nvert, float *xyz, float *norm, float *colr);
 static void yglTstripsSmNoArr(long nstrip, long *len, float *xyz, 
                               float *norm, float *colr);
 static void yglTstripArr(long nvert, float *xyz, float *norm, float *colr);
 static void yglTstripNoArr(long nvert, float *xyz, float *norm, float *colr);
+static void yglTstripNoArrAlpha(long nvert, float *xyz, float *norm, float *colr);
+static void yglTstripArrAlpha(long nvert, float *xyz, float *norm, float *colr);
+static void yglTstripsSmNoArrAlpha(long nstrip, long *len, float *xyz, 
+                                   float *norm, float *colr);
+
+static void yglQstripsSmNoArrAlpha(long nstrip, long *len, float *xyz, 
+                                   float *norm, float *colr);
+static void yglQstripSmNoArr(long nvert, float *xyz, float *norm, float *colr);
 static void yglQstripArrNoLite(long nvert, float *xyz, float *colr);
+static void yglQstripArrNoLiteAlpha(long nvert, float *xyz, float *colr);
 static void yglQstripSmArr(long nvert, float *xyz, float *norm, float *colr);
+static void yglQstripSmArrAlpha(long nvert, float *xyz, float *norm, float *colr);
 static void yglQstripsSmNoArr(long nstrip, long *len, float *xyz, float *norm,
                               float *colr);
 static void yglQstripArr(long nvert, float *xyz, float *norm, float *colr);
 static void yglQstripNoArr(long nvert, float *xyz, float *norm, float *colr);
+static void yglQstripNoArrAlpha(long nvert, float *xyz, float *norm, float *colr);
 static void yglQstripNoArrNoLite(long nvert, float *xyz, float *colr);
+static void yglQstripNoArrNoLiteAlpha(long nvert, float *xyz, float *colr);
+static void yglQstripArrAlpha(long nvert, float *xyz, float *norm, float *colr);
 
 /*
 #define CHEK_ERROR(x)	yygl_chek_error(x)
@@ -51,6 +63,7 @@ void yglTstrips(long nstrip, long *len, float *xyz, float *norm,
   long i, num, vert, ntri;
   float oldSpec;
 
+  if(alpha_pass) return;
   yglSetPolyMode(edge);
   if(smooth) {
     /* use smooth shading */
@@ -131,6 +144,7 @@ void yglTstripsAlpha(long nstrip, long *len, float *xyz, float *norm,
   GLfloat mat_nul[]= {0.0, 0.0, 0.0, 1.0};
 #endif
   
+  if(!alpha_pass) return;
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glDepthMask(GL_FALSE);
@@ -152,7 +166,7 @@ void yglTstripsAlpha(long nstrip, long *len, float *xyz, float *norm,
     if(glCurrWin3d->use_array) {
       for(i= 0, vert= 0, ntri= 0; i < nstrip; i++) {
         num= len[i];
-        yglTstripArrNoLite(num, xyz+vert*3, colr+4*ntri);
+        yglTstripArrNoLiteAlpha(num, xyz+vert*3, colr+4*ntri);
         vert += num;
         ntri += num-2;
       }
@@ -172,7 +186,7 @@ void yglTstripsAlpha(long nstrip, long *len, float *xyz, float *norm,
     if(glCurrWin3d->use_array) {
       for(i= 0, vert= 0, ntri= 0; i < nstrip; i++) {
         num= len[i];
-        yglTstripSmArr(num, xyz+vert*3, norm+vert*3, colr+4*ntri);
+        yglTstripSmArrAlpha(num, xyz+vert*3, norm+vert*3, colr+4*ntri);
         vert += num;
         ntri += num-2;
       }
@@ -186,14 +200,14 @@ void yglTstripsAlpha(long nstrip, long *len, float *xyz, float *norm,
     if(glCurrWin3d->use_array) {
       for(i= 0, vert= 0, ntri= 0; i < nstrip; i++) {
         num= len[i];
-        yglTstripArr(num, xyz+vert*3, norm+ntri*3, colr+4*ntri);
+        yglTstripArrAlpha(num, xyz+vert*3, norm+ntri*3, colr+4*ntri);
         vert += num;
         ntri += num-2;
       }
     } else {
       for(i= 0, vert= 0, ntri= 0; i < nstrip; i++) {
         num= len[i];
-        yglTstripNoArr(num, xyz+vert*3, norm+ntri*3, colr+4*ntri);
+        yglTstripNoArrAlpha(num, xyz+vert*3, norm+ntri*3, colr+4*ntri);
         vert += num;
         ntri += num-2;
       }
@@ -213,6 +227,7 @@ void yglQstrips(long nstrip, long *len, float *xyz, float *norm,
   long i, num, vert, nquad;
   float oldSpec;
 
+  if(alpha_pass) return;
   yglSetPolyMode(edge);
   if(smooth) {
     /* use smooth shading */
@@ -287,6 +302,7 @@ void yglQstripsAlpha(long nstrip, long *len, float *xyz, float *norm,
   long i, num, vert, nquad;
   float oldSpec;
 
+  if(!alpha_pass) return;
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   yglSetPolyMode(edge);
@@ -306,14 +322,14 @@ void yglQstripsAlpha(long nstrip, long *len, float *xyz, float *norm,
     if(glCurrWin3d->use_array) {
       for(i= 0, vert= 0, nquad= 0; i < nstrip; i++) {
         num= len[i];
-        yglQstripArrNoLite(num, xyz+vert*3, colr+4*nquad);
+        yglQstripArrNoLiteAlpha(num, xyz+vert*3, colr+4*nquad);
         vert += num;
         nquad += num-1;
       }
     } else {
       for(i= 0, vert= 0, nquad= 0; i < nstrip; i++) {
         num= len[i];
-        yglQstripNoArrNoLite(num, xyz+vert*3, colr+4*nquad);
+        yglQstripNoArrNoLiteAlpha(num, xyz+vert*3, colr+4*nquad);
         vert += num;
         nquad += num-1;
       }
@@ -325,7 +341,7 @@ void yglQstripsAlpha(long nstrip, long *len, float *xyz, float *norm,
     if(glCurrWin3d->use_array) {
       for(i= 0, vert= 0, nquad= 0; i < nstrip; i++) {
         num= len[i];
-        yglQstripSmArr(num, xyz+vert*3, norm+vert*3, colr+4*nquad);
+        yglQstripSmArrAlpha(num, xyz+vert*3, norm+vert*3, colr+4*nquad);
         vert += num;
         nquad += num-1;
       }
@@ -338,14 +354,14 @@ void yglQstripsAlpha(long nstrip, long *len, float *xyz, float *norm,
     if(glCurrWin3d->use_array) {
       for(i= 0, vert= 0, nquad= 0; i < nstrip; i++) {
         num= len[i];
-        yglQstripArr(num, xyz+vert*3, norm+nquad*3, colr+4*nquad);
+        yglQstripArrAlpha(num, xyz+vert*3, norm+nquad*3, colr+4*nquad);
         vert += num;
         nquad += num-1;
       }
     } else {
       for(i= 0, vert= 0, nquad= 0; i < nstrip; i++) {
         num= len[i];
-        yglQstripNoArr(num, xyz+vert*3, norm+nquad*3, colr+4*nquad);
+        yglQstripNoArrAlpha(num, xyz+vert*3, norm+nquad*3, colr+4*nquad);
         vert += num;
         nquad += num-1;
       }
@@ -652,6 +668,65 @@ void yglTstripSmArr(long nvert, float *xyz, float *norm, float *colr)
   CHEK_ERROR("yglTstripSmArr");
 }
 
+void yglTstripSmArrAlpha(long nvert, float *xyz, float *norm, float *colr)
+{
+  long i3;
+  float *arr_colr, *arr_norm, *arr_vert;
+  long ind_colr, ind_vert;
+
+  /* draw the strip */
+  if(nvert <= 2) return;
+
+  /* make an array big enough to hold all the colors, normals, and
+     vertices for the quad strip */
+  ind_colr= ind_vert= 0;
+  arr_colr= (float *)p_malloc(4*nvert*sizeof(float));
+  arr_norm= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  for(i3= 0; i3 < 4*(nvert-2); i3 += 4) {
+    arr_colr[ind_colr++]= colr[i3];
+    arr_colr[ind_colr++]= colr[i3+1];
+    arr_colr[ind_colr++]= colr[i3+2];
+    arr_colr[ind_colr++]= colr[i3+3];
+  }
+  for(i3= 0; i3 < 3*nvert; i3 += 3) {
+    arr_norm[ind_vert]= norm[i3];
+    arr_vert[ind_vert++]= xyz[i3];
+    arr_norm[ind_vert]= norm[i3+1];
+    arr_vert[ind_vert++]= xyz[i3+1];
+    arr_norm[ind_vert]= norm[i3+2];
+    arr_vert[ind_vert++]= xyz[i3+2];
+  }
+  /* NOTE: for each enabled array, a corresponding array must be
+     defined and have data filled in before a call to glDrawArrays,
+     because that call will use data from each enabled array */
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glColorPointer(4, GL_FLOAT, 0, arr_colr);
+  glNormalPointer(GL_FLOAT, 0, arr_norm);
+  glVertexPointer(3, GL_FLOAT, 0, arr_vert);
+  /* draw all triangles/quads using previously specified colors, vertices,
+     and normals */
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, nvert);
+  /* free up the storage */
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
+  CHEK_ERROR("yglTstripSmArr");
+}
+
 void yglQstripSmArr(long nvert, float *xyz, float *norm, float *colr)
 {
   long i3, i6;
@@ -702,6 +777,75 @@ void yglQstripSmArr(long nvert, float *xyz, float *norm, float *colr)
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
   glColorPointer(3, GL_FLOAT, 0, arr_colr);
+  glNormalPointer(GL_FLOAT, 0, arr_norm);
+  glVertexPointer(3, GL_FLOAT, 0, arr_vert);
+  /* draw all triangles/quads using previously specified colors, vertices,
+     and normals */
+  glDrawArrays(GL_QUAD_STRIP, 0, 2*nvert);
+  /* free up the storage */
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
+  CHEK_ERROR("yglQstripSmArr");
+}
+
+void yglQstripSmArrAlpha(long nvert, float *xyz, float *norm, float *colr)
+{
+  long i3, i6;
+  float *arr_colr, *arr_norm, *arr_vert;
+  long ind_colr, ind_vert;
+
+  /* draw the strip */
+  if(nvert <= 1) return;
+
+  /* make an array big enough to hold all the colors, normals, and
+     vertices for the quad strip */
+  ind_colr= ind_vert= 0;
+  arr_colr= (float *)p_malloc(8*nvert*sizeof(float));
+  arr_norm= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  for(i3= 0; i3 < 4*(nvert-1); i3 += 4) {
+    arr_colr[ind_colr++]= colr[i3];
+    arr_colr[ind_colr++]= colr[i3+1];
+    arr_colr[ind_colr++]= colr[i3+2];
+    arr_colr[ind_colr++]= colr[i3+3];
+    arr_colr[ind_colr++]= colr[i3];
+    arr_colr[ind_colr++]= colr[i3+1];
+    arr_colr[ind_colr++]= colr[i3+2];
+    arr_colr[ind_colr++]= colr[i3+3];
+  }
+  for(i6= 0; i6 < 6*nvert; i6 += 6) {
+    arr_norm[ind_vert]= norm[i6];
+    arr_vert[ind_vert++]= xyz[i6];
+    arr_norm[ind_vert]= norm[i6+1];
+    arr_vert[ind_vert++]= xyz[i6+1];
+    arr_norm[ind_vert]= norm[i6+2];
+    arr_vert[ind_vert++]= xyz[i6+2];
+    arr_norm[ind_vert]= norm[i6+3];
+    arr_vert[ind_vert++]= xyz[i6+3];
+    arr_norm[ind_vert]= norm[i6+4];
+    arr_vert[ind_vert++]= xyz[i6+4];
+    arr_norm[ind_vert]= norm[i6+5];
+    arr_vert[ind_vert++]= xyz[i6+5];
+  }
+  /* NOTE: for each enabled array, a corresponding array must be
+     defined and have data filled in before a call to glDrawArrays,
+     because that call will use data from each enabled array */
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glColorPointer(4, GL_FLOAT, 0, arr_colr);
   glNormalPointer(GL_FLOAT, 0, arr_norm);
   glVertexPointer(3, GL_FLOAT, 0, arr_vert);
   /* draw all triangles/quads using previously specified colors, vertices,
@@ -779,6 +923,71 @@ void yglTstripArr(long nvert, float *xyz, float *norm, float *colr)
   CHEK_ERROR("yglTstripArr");
 }
 
+void yglTstripArrAlpha(long nvert, float *xyz, float *norm, float *colr)
+{
+  long i3, ic4;
+  float *arr_colr, *arr_norm, *arr_vert;
+  long ind_colr, ind_norm, ind_vert;
+
+  /* draw the strip */
+  if(nvert <= 2) return;
+
+  /* make an array big enough to hold all the colors, normals, and
+     vertices for the quad strip */
+  ind_colr= ind_norm= ind_vert= 0;
+  arr_colr= (float *)p_malloc(4*nvert*sizeof(float));
+  arr_norm= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  arr_norm[ind_norm++]= norm[0];
+  arr_norm[ind_norm++]= norm[1];
+  arr_norm[ind_norm++]= norm[2];
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  arr_norm[ind_norm++]= norm[0];
+  arr_norm[ind_norm++]= norm[1];
+  arr_norm[ind_norm++]= norm[2];
+  for(i3= 0, ic4= 0; i3 < 3*(nvert-2); i3 += 3, ic4 += 4) {
+    arr_colr[ind_colr++]= colr[ic4];
+    arr_colr[ind_colr++]= colr[ic4+1];
+    arr_colr[ind_colr++]= colr[ic4+2];
+    arr_colr[ind_colr++]= colr[ic4+3];
+    arr_norm[ind_norm++]= norm[i3];
+    arr_norm[ind_norm++]= norm[i3+1];
+    arr_norm[ind_norm++]= norm[i3+2];
+  }
+  for(i3= 0; i3 < 3*nvert; i3 += 3) {
+    arr_vert[ind_vert++]= xyz[i3];
+    arr_vert[ind_vert++]= xyz[i3+1];
+    arr_vert[ind_vert++]= xyz[i3+2];
+  }
+  /* NOTE: for each enabled array, a corresponding array must be
+     defined and have data filled in before a call to glDrawArrays,
+     because that call will use data from each enabled array */
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glColorPointer(4, GL_FLOAT, 0, arr_colr);
+  glNormalPointer(GL_FLOAT, 0, arr_norm);
+  glVertexPointer(3, GL_FLOAT, 0, arr_vert);
+  /* draw all triangles/quads using previously specified colors, vertices,
+     and normals */
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, nvert);
+  /* free up the storage */
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
+  CHEK_ERROR("yglTstripArrAlpha");
+}
+
 void yglQstripArr(long nvert, float *xyz, float *norm, float *colr)
 {
   long i3, i6;
@@ -850,6 +1059,81 @@ void yglQstripArr(long nvert, float *xyz, float *norm, float *colr)
   CHEK_ERROR("yglQstripArr");
 }
 
+void yglQstripArrAlpha(long nvert, float *xyz, float *norm, float *colr)
+{
+  long i3, i6, ic4;
+  float *arr_colr, *arr_norm, *arr_vert;
+  long ind_colr, ind_norm, ind_vert;
+
+  /* draw the strip */
+  if(nvert <= 1) return;
+
+  /* make an array big enough to hold all the colors, normals, and
+     vertices for the quad strip */
+  ind_colr= ind_norm= ind_vert= 0;
+  arr_colr= (float *)p_malloc(8*nvert*sizeof(float));
+  arr_norm= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  arr_norm[ind_norm++]= norm[0];
+  arr_norm[ind_norm++]= norm[1];
+  arr_norm[ind_norm++]= norm[2];
+  arr_norm[ind_norm++]= norm[0];
+  arr_norm[ind_norm++]= norm[1];
+  arr_norm[ind_norm++]= norm[2];
+  for(i3= 0, ic4= 0; i3 < 3*(nvert-1); i3 += 3, ic4 += 4) {
+    arr_colr[ind_colr++]= colr[ic4];
+    arr_colr[ind_colr++]= colr[ic4+1];
+    arr_colr[ind_colr++]= colr[ic4+2];
+    arr_colr[ind_colr++]= colr[ic4+3];
+    arr_colr[ind_colr++]= colr[ic4];
+    arr_colr[ind_colr++]= colr[ic4+1];
+    arr_colr[ind_colr++]= colr[ic4+2];
+    arr_colr[ind_colr++]= colr[ic4+3];
+    arr_norm[ind_norm++]= norm[i3];
+    arr_norm[ind_norm++]= norm[i3+1];
+    arr_norm[ind_norm++]= norm[i3+2];
+    arr_norm[ind_norm++]= norm[i3];
+    arr_norm[ind_norm++]= norm[i3+1];
+    arr_norm[ind_norm++]= norm[i3+2];
+  }
+  for(i6= 0; i6 < 6*nvert; i6 += 6) {
+    arr_vert[ind_vert++]= xyz[i6];
+    arr_vert[ind_vert++]= xyz[i6+1];
+    arr_vert[ind_vert++]= xyz[i6+2];
+    arr_vert[ind_vert++]= xyz[i6+3];
+    arr_vert[ind_vert++]= xyz[i6+4];
+    arr_vert[ind_vert++]= xyz[i6+5];
+  }
+  /* NOTE: for each enabled array, a corresponding array must be
+     defined and have data filled in before a call to glDrawArrays,
+     because that call will use data from each enabled array */
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glColorPointer(4, GL_FLOAT, 0, arr_colr);
+  glNormalPointer(GL_FLOAT, 0, arr_norm);
+  glVertexPointer(3, GL_FLOAT, 0, arr_vert);
+  /* draw all triangles/quads using previously specified colors, vertices,
+     and normals */
+  glDrawArrays(GL_QUAD_STRIP, 0, 2*nvert);
+  /* free up the storage */
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  p_free(arr_colr);
+  p_free(arr_norm);
+  p_free(arr_vert);
+  CHEK_ERROR("yglQstripArr");
+}
+
 void yglTstripNoArr(long nvert, float *xyz, float *norm, float *colr)
 {
   long i3;
@@ -872,6 +1156,40 @@ void yglTstripNoArr(long nvert, float *xyz, float *norm, float *colr)
       old_red= colr[i3];
       old_green= colr[i3+1];
       old_blue= colr[i3+2];
+    }
+    glNormal3fv(norm+i3);
+    /* NOTE: It makes no difference in local performance if the coords
+       are converted to floats before being stored in the display list */
+    glVertex3fv(xyz+i3+6);
+  }
+  glEnd();
+  CHEK_ERROR("yglTstripNoArr");
+}
+
+void yglTstripNoArrAlpha(long nvert, float *xyz, float *norm, float *colr)
+{
+  long i3;
+  double old_red, old_green, old_blue, old_alpha;
+
+  /* draw the strip */
+  if(nvert <= 2) return;
+
+  glBegin(GL_TRIANGLE_STRIP);
+  glColor4fv(colr);
+  old_red= colr[0];
+  old_green= colr[1];
+  old_blue= colr[2];
+  old_alpha= colr[3];
+  glVertex3fv(xyz);
+  glVertex3fv(xyz+3);
+  for(i3= 0; i3 < 3*(nvert-2); i3 += 3) {
+    if(colr[i3] != old_red || colr[i3+1] != old_green || 
+       colr[i3+2] != old_blue || colr[3] != old_alpha) {
+      glColor4fv(colr+i3);
+      old_red= colr[i3];
+      old_green= colr[i3+1];
+      old_blue= colr[i3+2];
+      old_alpha= colr[3];
     }
     glNormal3fv(norm+i3);
     /* NOTE: It makes no difference in local performance if the coords
@@ -905,6 +1223,42 @@ void yglQstripNoArr(long nvert, float *xyz, float *norm, float *colr)
       old_red= colr[i3];
       old_green= colr[i3+1];
       old_blue= colr[i3+2];
+    }
+    glNormal3fv(norm+i3);
+    /* NOTE: It makes no difference in local performance if the coords
+       are converted to floats before being stored in the display list */
+    glVertex3fv(xyz+i6);
+    glVertex3fv(xyz+i6+3);
+  }
+  glEnd();
+  CHEK_ERROR("yglQstripNoArr");
+}
+
+void yglQstripNoArrAlpha(long nvert, float *xyz, float *norm, float *colr)
+{
+  long i3, i6;
+  double old_red, old_green, old_blue, old_alpha;
+
+  /* draw the strip */
+  if(nvert <= 2) return;
+
+  glBegin(GL_QUAD_STRIP);
+  glColor4fv(colr);
+  old_red= colr[0];
+  old_green= colr[1];
+  old_blue= colr[2];
+  old_alpha= colr[3];
+  glColor3fv(colr);
+  glVertex3fv(xyz);
+  glVertex3fv(xyz+3);
+  for(i3= 0, i6= 6; i3 < 3*(nvert-1); i3 += 3, i6 += 6) {
+    if(colr[i3] != old_red || colr[i3+1] != old_green || 
+       colr[i3+2] != old_blue || colr[3] != old_alpha) {
+      glColor4fv(colr+i3);
+      old_red= colr[i3];
+      old_green= colr[i3+1];
+      old_blue= colr[i3+2];
+      old_alpha= colr[3];
     }
     glNormal3fv(norm+i3);
     /* NOTE: It makes no difference in local performance if the coords
@@ -963,6 +1317,106 @@ void yglTstripArrNoLite(long nvert, float *xyz, float *colr)
   CHEK_ERROR("yglTstripArrNoLite");
 }
 
+void yglTstripArrNoLiteAlpha(long nvert, float *xyz, float *colr)
+{
+  long i3;
+  float *arr_colr, *arr_vert;
+  long ind_colr, ind_vert;
+
+  /* draw the strip */
+  if(nvert <= 2) return;
+
+  /* make an array big enough to hold all the colors and
+     vertices for the quad strip */
+  ind_colr= ind_vert= 0;
+  arr_colr= (float *)p_malloc(4*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(3*nvert*sizeof(float));
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  for(i3= 0; i3 < 3*(nvert-2); i3 += 3) {
+    arr_colr[ind_colr++]= colr[i3];
+    arr_colr[ind_colr++]= colr[i3+1];
+    arr_colr[ind_colr++]= colr[i3+2];
+    arr_colr[ind_colr++]= colr[i3+3];
+  }
+  for(i3= 0; i3 < 3*nvert; i3 += 3) {
+    arr_vert[ind_vert++]= xyz[i3];
+    arr_vert[ind_vert++]= xyz[i3+1];
+    arr_vert[ind_vert++]= xyz[i3+2];
+  }
+  /* NOTE: for each enabled array, a corresponding array must be
+     defined and have data filled in before a call to glDrawArrays,
+     because that call will use data from each enabled array */
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glColorPointer(4, GL_FLOAT, 0, arr_colr);
+  glVertexPointer(3, GL_FLOAT, 0, arr_vert);
+  /* draw all triangles/quads using previously specified colors, vertices */
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, nvert);
+  /* free up the storage */
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  p_free(arr_colr);
+  p_free(arr_vert);
+  CHEK_ERROR("yglTstripArrNoLite");
+}
+
+void yglTstripArrNoLiteAlphaMulti(long nvert, float *xyz, float *colr)
+{
+  long i3, j, csiz, preload;
+  float *arr_colr, *arr_vert;
+  long ind_colr, ind_vert;
+
+  /* draw the strip */
+  if(nvert <= 2) return;
+
+  csiz= 4;  /* either 3 for RGB color or 4 for RGBA */
+  /* If the input is a color per triangle, load the color for the first
+     triangle twice before starting to copy the color array */
+  preload= 2;
+  /* make an array big enough to hold all the colors and
+     vertices for the quad strip */
+  ind_colr= ind_vert= 0;
+  arr_colr= (float *)p_malloc(csiz*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(3*nvert*sizeof(float));
+  for(i3= 0; i3 < preload; i3++) {
+    for(j= 0; j< csiz; j++) {
+      arr_colr[ind_colr++]= colr[j];
+    }
+  }
+  for(i3= 0; i3 < 3*(nvert-2); i3 += 3) {
+    for(j= 0; j< csiz; j++) {
+      arr_colr[ind_colr++]= colr[i3+j];
+    }
+  }
+  for(i3= 0; i3 < 3*nvert; i3 += 3) {
+    arr_vert[ind_vert++]= xyz[i3];
+    arr_vert[ind_vert++]= xyz[i3+1];
+    arr_vert[ind_vert++]= xyz[i3+2];
+  }
+  /* NOTE: for each enabled array, a corresponding array must be
+     defined and have data filled in before a call to glDrawArrays,
+     because that call will use data from each enabled array */
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glColorPointer(csiz, GL_FLOAT, 0, arr_colr);
+  glVertexPointer(3, GL_FLOAT, 0, arr_vert);
+  /* draw all triangles/quads using previously specified colors, vertices */
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, nvert);
+  /* free up the storage */
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  p_free(arr_colr);
+  p_free(arr_vert);
+  CHEK_ERROR("yglTstripArrNoLite");
+}
+
 void yglQstripArrNoLite(long nvert, float *xyz, float *colr)
 {
   long i3, i6;
@@ -1005,6 +1459,63 @@ void yglQstripArrNoLite(long nvert, float *xyz, float *colr)
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
   glColorPointer(3, GL_FLOAT, 0, arr_colr);
+  glVertexPointer(3, GL_FLOAT, 0, arr_vert);
+  /* draw all triangles/quads using previously specified colors, vertices */
+  glDrawArrays(GL_QUAD_STRIP, 0, 2*nvert);
+  /* free up the storage */
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  p_free(arr_colr);
+  p_free(arr_vert);
+  CHEK_ERROR("yglQstripArrNoLite");
+}
+
+void yglQstripArrNoLiteAlpha(long nvert, float *xyz, float *colr)
+{
+  long i3, i6;
+  float *arr_colr, *arr_vert;
+  long ind_colr, ind_vert;
+
+  /* draw the strip */
+  if(nvert <= 1) return;
+
+  /* make an array big enough to hold all the colors and
+     vertices for the quad strip */
+  ind_colr= ind_vert= 0;
+  arr_colr= (float *)p_malloc(8*nvert*sizeof(float));
+  arr_vert= (float *)p_malloc(6*nvert*sizeof(float));
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  arr_colr[ind_colr++]= colr[0];
+  arr_colr[ind_colr++]= colr[1];
+  arr_colr[ind_colr++]= colr[2];
+  arr_colr[ind_colr++]= colr[3];
+  for(i3= 0; i3 < 3*(nvert-1); i3 += 3) {
+    arr_colr[ind_colr++]= colr[i3];
+    arr_colr[ind_colr++]= colr[i3+1];
+    arr_colr[ind_colr++]= colr[i3+2];
+    arr_colr[ind_colr++]= colr[i3+3];
+    arr_colr[ind_colr++]= colr[i3];
+    arr_colr[ind_colr++]= colr[i3+1];
+    arr_colr[ind_colr++]= colr[i3+2];
+    arr_colr[ind_colr++]= colr[i3+3];
+  }
+  for(i6= 0; i6 < 6*nvert; i6 += 6) {
+    arr_vert[ind_vert++]= xyz[i6];
+    arr_vert[ind_vert++]= xyz[i6+1];
+    arr_vert[ind_vert++]= xyz[i6+2];
+    arr_vert[ind_vert++]= xyz[i6+3];
+    arr_vert[ind_vert++]= xyz[i6+4];
+    arr_vert[ind_vert++]= xyz[i6+5];
+  }
+  /* NOTE: for each enabled array, a corresponding array must be
+     defined and have data filled in before a call to glDrawArrays,
+     because that call will use data from each enabled array */
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  glColorPointer(4, GL_FLOAT, 0, arr_colr);
   glVertexPointer(3, GL_FLOAT, 0, arr_vert);
   /* draw all triangles/quads using previously specified colors, vertices */
   glDrawArrays(GL_QUAD_STRIP, 0, 2*nvert);
@@ -1082,6 +1593,40 @@ void yglTstripNoArrNoLiteAlpha(long nvert, float *xyz, float *colr)
   CHEK_ERROR("yglTstripNoArrNoLiteAlpha");
 }
 
+void yglQstripNoArrNoLiteAlpha(long nvert, float *xyz, float *colr)
+{
+  long i4, i6;
+  double old_red, old_green, old_blue, old_alpha;
+
+  /* draw the strip */
+  if(nvert <= 2) return;
+
+  glBegin(GL_QUAD_STRIP);
+  glColor4fv(colr);
+  old_red= colr[0];
+  old_green= colr[1];
+  old_blue= colr[2];
+  old_alpha= colr[2];
+  glVertex3fv(xyz);
+  glVertex3fv(xyz+3);
+  for(i4= 0, i6= 6; i4 < 4*(nvert-1); i4 += 3, i6 += 6) {
+    if(colr[i4] != old_red || colr[i4+1] != old_green || 
+       colr[i4+2] != old_blue || colr[i4+3] != old_alpha) {
+      glColor4fv(colr+i4);
+      old_red= colr[i4];
+      old_green= colr[i4+1];
+      old_blue= colr[i4+2];
+      old_alpha= colr[i4+3];
+    }
+    /* NOTE: It makes no difference in local performance if the coords
+       are converted to floats before being stored in the display list */
+    glVertex3fv(xyz+i6);
+    glVertex3fv(xyz+i6+3);
+  }
+  glEnd();
+  CHEK_ERROR("yglQstripNoArrNoLite");
+}
+
 void yglQstripNoArrNoLite(long nvert, float *xyz, float *colr)
 {
   long i3, i6;
@@ -1125,6 +1670,7 @@ void yglTstripsNdx(long nstrip, long numedg, long ntri, long *len, long *ndx,
   long i, num, i3, indv;
   float old_red= -1, old_green= -1, old_blue= -1;
 
+  if(alpha_pass) return;
   yglSetPolyMode(edge);
   /* use smooth shading */
   yglSetShade(1);
@@ -1179,6 +1725,7 @@ void yglTstripsAlphaNdx(long nstrip, long numedg, long ntri, long *len,
   long i, num, i3, indv;
   float old_red= -1, old_green= -1, old_blue= -1, old_alpha= -1;
 
+  if(!alpha_pass) return;
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glDepthMask(GL_FALSE);

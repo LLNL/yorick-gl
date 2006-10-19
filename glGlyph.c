@@ -1,5 +1,5 @@
 /*
- * $Id: glGlyph.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
+ * $Id: glGlyph.c,v 1.3 2006-10-19 14:48:19 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -51,6 +51,7 @@ void yglGlyphs(long nglyph, float *origins, float *scal,
 
   /* draw the glyph list now */
   if(nglyph <= 0) return;
+  if(alpha_pass) return;
 
   if(!c_glyph) {
 #ifdef TET_DFLT
@@ -319,6 +320,7 @@ void yglGlyphs_old(long nglyph, float *origins, float *hite, float *base,
 
   /* draw the glyph list now */
   if(nglyph <= 0) return;
+  if(alpha_pass) return;
 
   /* use smooth shading */
   yglSetShade(1);
@@ -384,6 +386,7 @@ void yglEllipsoids(long nglyph, float *origins, float *radii, float *ellip,
 
   /* draw the glyph list now */
   if(nglyph <= 0) return;
+  if(alpha_pass) return;
 
   pi= 4.0*atan(1.0);
   numi= (int)(360.0/ang_step_e)+1;

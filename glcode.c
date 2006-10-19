@@ -1,5 +1,5 @@
 /*
- * $Id: glcode.c,v 1.1 2005-09-18 22:07:49 dhmunro Exp $
+ * $Id: glcode.c,v 1.2 2006-10-19 14:48:19 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -148,6 +148,7 @@ void draw_plane(float pt1[3], float pt2[3], float pt3[3], int num1, int num2)
      num2 lines along the second edge.
   */
 
+  if(alpha_pass) return;
   /* use smooth shading */
   yglSetShade(1);
   yglUpdateProperties();
@@ -226,6 +227,8 @@ void yglCells(long nx, long ny, float xyz[3][3], float *norm,
   float xa, ya, za, xb, yb, zb, oldSpec;
   float blackvec[]= {0.0f, 0.0f, 0.0f, 0.0f};
 
+  if(do_alpha && !alpha_pass) return;
+  if(!do_alpha && alpha_pass) return;
   /* there are nx by ny cells to be drawn. the first two corners
      are along an "x-edge" and the 2nd and 3rd are along a "y-edge". */
   x0= xyz[0][0];
@@ -314,6 +317,7 @@ void yglPlm(long nx, long ny, float *xyz, float *colr)
 
   /* draw a logically 2D mesh in one color */
   if(nx <= 0 || ny <= 0) return;
+  if(alpha_pass) return;
 
   /* NOTE: It makes no difference in local performance if the coords
      are converted to floats before being stored in the display list */
@@ -346,6 +350,7 @@ void yglPlf(long nx, long ny, float *xyz, float *colr)
 
   /* fill a logically 2D mesh */
   if(nx <= 0 || ny <= 0) return;
+  if(alpha_pass) return;
 
   /* NOTE: It makes no difference in local performance if the coords
      are converted to floats before being stored in the display list */
@@ -378,6 +383,8 @@ void yglSurf(long do_alpha, long nx, long ny, float *xyz, float *norm, float *co
 
   /* fill a logically 2D mesh */
   if(nx <= 0 || ny <= 0) return;
+  if(do_alpha && !alpha_pass) return;
+  if(!do_alpha && alpha_pass) return;
 
   /* NOTE: It makes no difference in local performance if the coords
      are converted to floats before being stored in the display list */
@@ -412,6 +419,8 @@ void yglColrSurf(long do_alpha, long nx, long ny, float *xyz, float *norm, float
 
   /* fill a logically 2D mesh with a color per vertex */
   if(nx <= 0 || ny <= 0) return;
+  if(do_alpha && !alpha_pass) return;
+  if(!do_alpha && alpha_pass) return;
 
   /* NOTE: It makes no difference in local performance if the coords
      are converted to floats before being stored in the display list */
@@ -467,6 +476,7 @@ void yglLines(long nvert, float *xyz, float *colr)
 
   /* draw the polyline */
   if(nvert <= 1) return;
+  if(alpha_pass) return;
 
   /*  this creates diffuse light not connected to any light source */
   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambi);
@@ -490,6 +500,7 @@ void yglPoints(long nvert, float *xyz, float *colr)
 
   /* draw the points */
   if(nvert <= 1) return;
+  if(alpha_pass) return;
 
   /*  glPointSize(3.5); */
 
@@ -764,6 +775,8 @@ void yglWireSphere(int list_num, double radius)
 	*/
   int i, j, numi, numj, numli, numlj, num2i;
   double lat, lon, x, y, z, csth, snth, csph, snph, pi;
+
+  if(alpha_pass) return;
 #define ang_step 30
 #define lin_step 5
   pi= 4.0*atan(1.0);

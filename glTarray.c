@@ -1,5 +1,5 @@
 /*
- * $Id: glTarray.c,v 1.1 2005-09-18 22:07:48 dhmunro Exp $
+ * $Id: glTarray.c,v 1.2 2006-10-19 14:48:19 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -28,6 +28,7 @@ void yglTarray(long smooth, long ntri, float *xyz, float *norm, float *colr,
 
   /* draw an array of triangles */
   if(ntri <= 0) return;
+  if(alpha_pass) return;
   if(emit) {
     /*  this creates diffuse light not connected to any light source */
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambi);
@@ -156,6 +157,15 @@ void yglTarrayAlpha(long smooth, long ntri, float *xyz, float *norm,
 
   /* draw an array of triangles */
   if(ntri <= 0) return;
+{
+  char msg[120];
+  sprintf(msg, "in yglTarrayAlpha, alpha_pass is %d\n", alpha_pass);
+  puts(msg);
+}
+  if(!alpha_pass) return;
+{
+  puts("drawing alpha tarray");
+}
   if(emit) {
     /*  this creates diffuse light not connected to any light source */
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambi);
@@ -295,6 +305,7 @@ void yglTarrayCubeMapAlpha(long ntri, float *xyz, float *norm, float *colr,
      for lighting. Assumes the cube map texture has already
      been loaded and that cube map textures have been enabled. */
   if(ntri <= 0) return;
+  if(!alpha_pass) return;
 
   if( !yglQueryTex3d(glCurrWin3d) ) return;
   if( !glCurrWin3d->hascubetex) return;
@@ -354,6 +365,7 @@ void yglTarrayCubeMap(long ntri, float *xyz, float *norm, float *colr,
      for lighting. Assumes the cube map texture has already
      been loaded and that cube map textures have been enabled. */
   if(ntri <= 0) return;
+  if(alpha_pass) return;
 
   if( !yglQueryTexCube() ) return;
   yglLdCubeTex();
@@ -418,10 +430,12 @@ void yglTarrayEmit(long do_alpha, long ntri, float *xyz, float *colr,
   /* turn off all light associated with the light source */
   glDisable(GL_LIGHT0);
   if(do_alpha) {
+    if(!alpha_pass) return;
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     colrsiz= 4;
   } else {
+    if(alpha_pass) return;
     glDisable(GL_BLEND);
     colrsiz= 3;
   }
@@ -522,6 +536,8 @@ void yglTvarray(long do_alpha, long cpervrt, long ntri, unsigned int *ptndx, flo
   puts("--- entering yglTvarray");
 #endif
 
+  if(do_alpha && !alpha_pass) return;
+  if(!do_alpha && alpha_pass) return;
   yglUpdateProperties();
 
 #ifdef TVDBG_BASE
@@ -680,6 +696,8 @@ void yglTvarray(long do_alpha, long cpervrt, long ntri, unsigned int *ptndx, flo
   puts("--- entering yglTvarray");
 #endif
 
+  if(do_alpha && !alpha_pass) return;
+  if(!do_alpha && alpha_pass) return;
   yglUpdateProperties();
 
 #ifdef TVDBG
@@ -721,6 +739,8 @@ void yglTivarray(long ntri, unsigned int *ptndx, void *ileave)
 {
   /* draw an array of triangles */
   if(ntri <= 0) return;
+  if(alpha_pass) return;
+
   /* use smooth shading */
   yglSetShade(1);
   yglUpdateProperties();
@@ -774,6 +794,7 @@ void yglQarray(long smooth, long nquad, float *xyz, float *norm,
 
   /* draw an array of quadrilaterals */
   if(nquad <= 0) return;
+  if(alpha_pass) return;
   if(smooth) {
     /* use smooth shading */
     yglSetShade(1);
@@ -859,6 +880,7 @@ void yglQarrayAlpha(long smooth, long nquad, float *xyz, float *norm,
 
   /* draw an array of quadrilaterals */
   if(nquad <= 0) return;
+  if(!alpha_pass) return;
   if(smooth) {
     /* use smooth shading */
     yglSetShade(1);
@@ -866,6 +888,9 @@ void yglQarrayAlpha(long smooth, long nquad, float *xyz, float *norm,
     /* use flat shading */
     yglSetShade(0);
   }
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glDepthMask(GL_FALSE);
   yglUpdateProperties();
 
   base= 0;
@@ -930,5 +955,7 @@ void yglQarrayAlpha(long smooth, long nquad, float *xyz, float *norm,
     }
   }
   glEnd();
+  glDepthMask(GL_TRUE);
+  glDisable(GL_BLEND);
   CHEK_ERROR("yglQarrayNoArr");
 }

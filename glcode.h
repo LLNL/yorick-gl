@@ -1,5 +1,5 @@
 /*
- * $Id: glcode.h,v 1.1 2005-09-18 22:07:49 dhmunro Exp $
+ * $Id: glcode.h,v 1.2 2006-10-19 14:48:19 dhmunro Exp $
  * Declarations for external OpenGL module.  These functions are
  * defined in glcode.c and are called appropriately by the CView
  * derived classes.
@@ -35,6 +35,8 @@
 extern "C" {
 
 #endif
+
+extern int alpha_pass;
 
 typedef struct g_callbacks g_callbacks;
 struct g_callbacks {
@@ -77,7 +79,7 @@ struct glWinProp {
   p_scr *s;
   int dirty;
   float back_red, back_green, back_blue, back_alpha;
-/* The "cage" is the three coord. planes at the "back" of the scene 
+  /* The "cage" is the three coord. planes at the "back" of the scene 
    as viewed from the current viewpoint. The planes have one color
    and the grid lines another. The planes are chosen from (xmin,xmax),
    (ymin,ymax), and (zmin,zmax) pairs. If cage_style is negative,

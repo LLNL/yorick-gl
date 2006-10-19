@@ -1,5 +1,5 @@
 /*
- * $Id: gltexture.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
+ * $Id: gltexture.c,v 1.3 2006-10-19 14:48:19 dhmunro Exp $
  * This file contains functions that use OpenGL texture capabilities.
  * A significant application is interactive volume visualization
  * using either 2D or 3D textures (prefereable 3D).
@@ -173,6 +173,7 @@ void yglTexcells(long nx, long ny, long nz, double delta[3],
   GLint texWidth, texHeight;
 #endif
 
+  if(alpha_pass) return;
   yglPrepTex2d();
 
   /* Textures must be a power of 2 in size. Find the smallest 
@@ -551,6 +552,7 @@ void yglTexcell2(long nx, long ny, long nz, double delta[3],
   GLint texWidth, texHeight;
 #endif
 
+  if(alpha_pass) return;
   yglPrepTex2d();
 
   /* Textures must be a power of 2 in size. Find the smallest 
@@ -1003,6 +1005,7 @@ void yglLdCubeTex(void)
 
   yglMakeCurrent(glCurrWin3d);
   if( !yglQueryTexCube() ) return;
+  if(alpha_pass) return;
 
   /* generate the cube map textures, if necessary */
   if(texNameCube) {
@@ -1084,6 +1087,7 @@ void yglLdTex3d(long nx, long ny, long nz, unsigned char *tex)
   long i, j, k, n, ind, indt, indup, n2x, n2y, n2z, nxh, nyh;
   long tex_siz;
 
+  if(alpha_pass) return;
   if(!yglQueryTex3d(glCurrWin3d)) {
     YError("This computer does not have 3D textures");
   }
@@ -1244,6 +1248,7 @@ void yglTexPoly(long nvert, float *verts, float *texverts)
 {
   long i;
 
+  if(alpha_pass) return;
   /* Draw a 3Dtextured polygon. */
   glBindTexture(glCurrWin3d->myGL_TEXTURE_3D, texName3d);
   glBegin(GL_POLYGON);
@@ -1258,6 +1263,7 @@ void yglTexTris(long ntri, float *verts, float *texverts)
 {
   long i, nd;
 
+  if(alpha_pass) return;
   /* Draw an array of 3Dtextured triangles. */
   glBindTexture(glCurrWin3d->myGL_TEXTURE_3D, texName3d);
   glBegin(GL_TRIANGLES);
@@ -1311,6 +1317,7 @@ void yglTex3dbox(double ds, double *origin, double *len)
   float *verts, *texverts;
   long i, j, ntri, maxtri, nvert, nslab;
 
+  if(alpha_pass) return;
   /* NOTE: len is the length of the sides of the whole volume,
      not the size of an individual cell.
   */

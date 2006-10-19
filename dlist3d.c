@@ -1,5 +1,5 @@
 /*
- * $Id: dlist3d.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
+ * $Id: dlist3d.c,v 1.3 2006-10-19 14:48:19 dhmunro Exp $
  * Implement functions used for manipulating 3D display lists.
  * The functions in this file maintains the display list for the 3D graphics 
  * package in Yorick.
@@ -28,6 +28,7 @@ extern long yglGetBoundsList3d(yBox3D *box, yList3d_Elem *elem);
 yList3d_Elem *yListDirectHead= 0;
 yList3d_Elem *yListCachedHead= 0;
 int yDrawBBox3d= 0;
+int alpha_pass= 0;
 
 void yglDrawCurr3d(void)
 {
@@ -109,11 +110,23 @@ void yglDrawListCache3d(void)
     /* need a new display list */
     /* draw all items in the "cached" display list */
     yglPrepList();
+    /* in the first pass draw all opaque objects */
+    alpha_pass= 0;
     elem= yListCachedHead;
     while(elem) {
       (*(elem->func))(0, elem->data);
       elem= elem->next;
-	}
+    }
+    /* In the second pass draw all translucent objects.
+       NOTE: objects with an alpha of 1.0 are still "translucent"
+       and need not produce the same effect as an opaque object. */
+    alpha_pass= 1;
+    elem= yListCachedHead;
+    while(elem) {
+      (*(elem->func))(0, elem->data);
+      elem= elem->next;
+    }
+    alpha_pass= 0;
   }
   /* if necessary, finish the display list, then draw it */
   yglFinCache();

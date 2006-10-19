@@ -1,5 +1,5 @@
 /*
- * $Id: glPolys.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
+ * $Id: glPolys.c,v 1.3 2006-10-19 14:48:19 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -40,6 +40,7 @@ void yglPolys(long npolys, long *len, float *xyz, float *norm,
   */
   float oldSpec;
 
+  if(alpha_pass) return;
   yglSetPolyMode(edge);
   oldSpec= yglGetMatSpec();
   if(!do_light) {
@@ -86,6 +87,11 @@ void yglPolysArr(long npoly, long *nverts, float *xyz, float *norm,
 
   /* draw the polygon list now */
   if(npoly <= 0) return;
+#ifdef USE_ALPHA
+  if(!alpha_pass) return;
+#else
+  if(alpha_pass) return;
+#endif
 
 #ifdef USE_ALPHA
   glEnable(GL_BLEND);
@@ -215,6 +221,11 @@ void yglPolysArrNoLite(long npoly, long *nverts, float *xyz,
 
   /* draw the polygon list now */
   if(npoly <= 0) return;
+#ifdef USE_ALPHA
+  if(!alpha_pass) return;
+#else
+  if(alpha_pass) return;
+#endif
 
 #ifdef USE_ALPHA
   glEnable(GL_BLEND);
@@ -321,6 +332,11 @@ void yglPolysNoArr(long npoly, long *nverts, float *xyz, float *norm,
 
   /* draw the polygon list now */
   if(npoly <= 0) return;
+#ifdef USE_ALPHA
+  if(!alpha_pass) return;
+#else
+  if(alpha_pass) return;
+#endif
 
 #ifdef USE_ALPHA
   glEnable(GL_BLEND);
@@ -363,6 +379,11 @@ void yglPolysNoArrNoLite(long npoly, long *nverts, float *xyz,
 
   /* draw the polygon list now */
   if(npoly <= 0) return;
+#ifdef USE_ALPHA
+  if(!alpha_pass) return;
+#else
+  if(alpha_pass) return;
+#endif
 
 #ifdef USE_ALPHA
   glEnable(GL_BLEND);
@@ -412,6 +433,11 @@ void yglPolysSmArr(long npoly, long *nverts, float *xyz, float *norm,
 
   /* draw the polygon list, with a normal per vertex */
   if(npoly <= 0) return;
+#ifdef USE_ALPHA
+  if(!alpha_pass) return;
+#else
+  if(alpha_pass) return;
+#endif
 
 #ifdef USE_ALPHA
   glEnable(GL_BLEND);
@@ -534,6 +560,11 @@ void yglPolysSmNoArr(long npoly, long *nverts, float *xyz, float *norm,
 
   /* draw the polygon list, with a normal per vertex */
   if(npoly <= 0) return;
+#ifdef USE_ALPHA
+  if(!alpha_pass) return;
+#else
+  if(alpha_pass) return;
+#endif
 
 #ifdef USE_ALPHA
   glEnable(GL_BLEND);

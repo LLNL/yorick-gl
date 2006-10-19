@@ -1,5 +1,5 @@
 /*
- * $Id: TriUtil.c,v 1.2 2006-03-25 03:12:29 dhmunro Exp $
+ * $Id: TriUtil.c,v 1.3 2006-10-19 14:48:19 dhmunro Exp $
  * This file contains utility functions for manipulating lists
  * of triangle arrays and strips
  */
@@ -356,7 +356,7 @@ void yglCollapseTriArrays3d(long colrtyp, TriArrayGrp *list, TriArrayGrp *nlist)
       newNorm[2]= oldNorm[2];
       newNorm += 3;
       oldNorm += 3;
-      // handle both color per vertex and color per triangle
+      /* handle both color per vertex and color per triangle */
       for(il= 0; il < color_loop; il++) {
         newColr[0]= oldColr[0];
         newColr[1]= oldColr[1];
