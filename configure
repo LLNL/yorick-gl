@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: configure,v 1.1 2005-09-18 22:08:03 dhmunro Exp $
+# $Id: configure,v 1.2 2008-02-26 05:25:35 dhmunro Exp $
 
 debug=no
 
@@ -156,6 +156,10 @@ EOF
     args="$CFLAGS $gincs $LDFLAGS -o cfg cfg.c"
     xlibs="$xlib -lXext -lX11"
     xlibm="$xlibs $MATHLIB"
+    osx105=""
+    if test -x /usr/bin/sw_vers; then
+      osx105="-dylib_file /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib:/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib"
+    fi
     for gll in -lGL -lMesaGL; do
       glibs="$xlib $gll -lXext -lX11"
       if $CC $args $glibs $MATHLIB >cfg.1c 2>&1; then
@@ -163,6 +167,10 @@ EOF
       elif test -n "$gllib" && \
            $CC $args $gllib $gll $xlibm >cfg.1c 2>&1; then
         glibs="$gllib $gll $xlibs"
+        xfound=both
+      elif test -n "$osx105" && \
+           $CC $args $gllib $gll $osx105 $xlibm >cfg.1c 2>&1; then
+        glibs="$gllib $gll $osx105 $xlibs"
         xfound=both
       else
         glibs="$xlib -lX11"
