@@ -1,5 +1,5 @@
 /*
- * $Id: glTarray.c,v 1.2 2006-10-19 14:48:19 dhmunro Exp $
+ * $Id: glTarray.c,v 1.3 2008-06-04 05:56:04 dhmunro Exp $
  */
 /* Copyright (c) 2005, The Regents of the University of California.
  * All rights reserved.
@@ -12,6 +12,7 @@
 #include "glWrappers.h"
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /*
 #define CHEK_ERROR(x)	yygl_chek_error(x)
