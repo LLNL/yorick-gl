@@ -6,6 +6,7 @@ Y_EXE=
 Y_EXE_PKGS=
 Y_EXE_HOME=
 Y_EXE_SITE=
+Y_HOME_PKG=
 
 # ----------------------------------------------------- optimization flags
 
@@ -50,11 +51,6 @@ include $(Y_MAKEDIR)/Make.cfg
 include $(Y_MAKEDIR)/Makepkg
 include $(Y_MAKEDIR)/Make$(TGT)
 
-# override macros Makepkg sets for rules and other macros
-# Y_HOME and Y_SITE in Make.cfg may not be correct (e.g.- relocatable)
-Y_HOME=$(Y_EXE_HOME)
-Y_SITE=$(Y_EXE_SITE)
-
 # reduce chance of yorick-1.5 corrupting this Makefile
 MAKE_TEMPLATE = protect-against-1.5
 
@@ -87,12 +83,6 @@ slicetree.o: Contour3D.h slicetree.h
 oglx.o: playgl.h oglx.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(D_MESA_PIXMAPS) -o $@ -c oglx.c
 oglw.o: playgl.h
-
-install::
-	$(YNSTALL) $(PKG_I_EXTRA) "$(Y_SITE)/i"
-
-uninstall::
-	cd "$(Y_SITE)/i"; rm -f $(PKG_I_EXTRA)
 
 distclean::
 	./configure --distclean
