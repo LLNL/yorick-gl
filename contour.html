@@ -1,0 +1,283 @@
+---
+layout: default
+headline: yorick-gl package
+---
+<p class="sectop">Back to <a href="index.html">library index</a>.</p>
+<p class="sectop">Package contour (in contour.i) - </p>
+<p class="sectop">Index of documented functions or symbols:</p>
+<div class="ndex0s">
+  <div class="ndex1">
+    <h3>I</h3>
+    <p><a href="contour.html#iso3">iso3</a></p>
+    <p><a href="contour.html#iso3cencrv">iso3cencrv</a></p>
+    <p><a href="contour.html#iso3cencrvndx">iso3cencrvndx</a></p>
+    <p><a href="contour.html#iso3cenreg">iso3cenreg</a></p>
+    <p><a href="contour.html#iso3cenregndx">iso3cenregndx</a></p>
+    <p><a href="contour.html#iso3cenregngrd">iso3cenregngrd</a></p>
+    <p><a href="contour.html#iso3hex">iso3hex</a></p>
+  </div>
+  <div class="ndex2">
+    <p><a href="contour.html#iso3ndx">iso3ndx</a></p>
+    <p><a href="contour.html#iso3zcencrv">iso3zcencrv</a></p>
+    <p><a href="contour.html#iso3zcencrvndx">iso3zcencrvndx</a></p>
+    <p><a href="contour.html#iso3zcenreg">iso3zcenreg</a></p>
+    <p><a href="contour.html#iso3zcenregndx">iso3zcenregndx</a></p>
+    <p><a href="contour.html#iso3zcenregngrd">iso3zcenregngrd</a></p>
+    <p><a href="contour.html#iso3_tree">iso3_tree</a></p>
+    <p><a href="contour.html#iso3_treecrv">iso3_treecrv</a></p>
+  </div>
+  <div class="ndex3">
+    <p><a href="contour.html#iso3_treevarr">iso3_treevarr</a></p>
+    <h3>M</h3>
+    <p><a href="contour.html#mak_isotree">mak_isotree</a></p>
+    <p><a href="contour.html#mak_slice_treecrv">mak_slice_treecrv</a></p>
+    <h3>S</h3>
+    <p><a href="contour.html#slice_tree">slice_tree</a></p>
+    <p><a href="contour.html#slice_treecrv">slice_treecrv</a></p>
+  </div>
+</div>
+<div class="docblock"><a name="iso3"></a><h3>iso3</h3>
+  <pre>DOCUMENT iso3(origin, delta, var, level, colr, var2=)
+
+  Included for compatibility of earlier versions of yorgl.
+  Please call iso3cenreg instead.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3cenreg">iso3cenreg</a>.</p>
+</div>
+<div class="docblock"><a name="iso3cencrv"></a><h3>iso3cencrv</h3>
+  <pre>DOCUMENT iso3cencrv(xyz
+  Extract an iso-surface from a variable on a curvilinear 3D grid.
+  Input array var is point centered and has one extra point on
+  each side. var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+  The result is a list of triangle arrays.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3cenreg">iso3cenreg</a>, <a href="contour.html#iso3zcencrv">iso3zcencrv</a>, <a href="contour.html#iso3zcencrvndx">iso3zcencrvndx</a>.</p>
+</div>
+<div class="docblock"><a name="iso3cencrvndx"></a><h3>iso3cencrvndx</h3>
+  <pre>DOCUMENT iso3cencrvndx(xyz, var, level, colr, var2=)
+
+  Extract an iso-surface from a variable on a curvilinear 3D grid.
+  Input array var is point centered and has one extra point on
+  each side. var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  The result is a list of groups of triangle arrays. 
+  If requested, triangle strips may extend across multiple zones.
+  Triangles are specified by indices into vectors of coordinates, 
+  gradients, and auxiliary variables. 
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3cenregndx">iso3cenregndx</a>, <a href="contour.html#iso3cencrv">iso3cencrv</a>, <a href="contour.html#iso3zcencrvndx">iso3zcencrvndx</a>.</p>
+</div>
+<div class="docblock"><a name="iso3cenreg"></a><h3>iso3cenreg</h3>
+  <pre>DOCUMENT iso3cenreg(origin, delta, var, level, colr, var2=)
+
+  Extract an iso-surface from a variable on a rectangular 3D grid.
+  Input array var is point centered and has one extra point on
+  each side. var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  The result is a list of groups of triangle arrays. 
+  If requested, triangle strips may extend across multiple zones.
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+  The result is a list of triangle arrays.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3cenregngrd">iso3cenregngrd</a>, <a href="contour.html#iso3zcenreg">iso3zcenreg</a>, <a href="contour.html#iso3cenregndx">iso3cenregndx</a>, <a href="contour.html#iso3cencrv">iso3cencrv</a>.</p>
+</div>
+<div class="docblock"><a name="iso3cenregndx"></a><h3>iso3cenregndx</h3>
+  <pre>DOCUMENT iso3cenregndx(origin, delta, var, level, colr, var2=)
+
+  Extract an iso-surface from a variable on a rectangular 3D grid.
+  Input array var is point centered and has one extra point on
+  each side. var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  The result is a list of groups of triangle arrays. 
+  If requested, triangle strips may extend across multiple zones.
+  Triangles are specified by indices into vectors of coordinates, 
+  gradients, and auxiliary variables. 
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3cenreg">iso3cenreg</a>, <a href="contour.html#iso3zcenregndx">iso3zcenregndx</a>, <a href="contour.html#iso3cencrv">iso3cencrv</a>, <a href="contour.html#iso3cencrvndx">iso3cencrvndx</a>.</p>
+</div>
+<div class="docblock"><a name="iso3cenregngrd"></a><h3>iso3cenregngrd</h3>
+  <pre>DOCUMENT iso3cenregngrd(origin, delta, var, level, colr, var2=)
+
+  Extract an iso-surface from a variable on a rectangular 3D grid.
+  Input array var is point centered and NO guard points. 
+  var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  The result is a list of groups of triangle arrays. 
+  If requested, triangle strips may extend across multiple zones.
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+  The result is a list of triangle arrays.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3cenreg">iso3cenreg</a>, <a href="contour.html#iso3zcenregngrd">iso3zcenregngrd</a>, <a href="contour.html#iso3cenregndx">iso3cenregndx</a>, <a href="contour.html#iso3cencrv">iso3cencrv</a>.</p>
+</div>
+<div class="docblock"><a name="iso3hex"></a><h3>iso3hex</h3>
+  <pre>DOCUMENT iso3hex(xyz, grad, hexndx, var, level, colr, var2=)
+  Extract an iso-surface from a variable on an arbitrarily
+  connected 3D grid of hexahedra.
+  xyz, grad, and var are coordinates, gradients, and
+  variable values at the points of the grid.
+  var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  hexndx has 8 indices into the xyz etc. arrays for 
+  each zone.
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+  The result is a list of triangle arrays.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3cenreg">iso3cenreg</a>, <a href="contour.html#iso3zcenreg">iso3zcenreg</a>, <a href="contour.html#iso3cencrv">iso3cencrv</a>, <a href="contour.html#iso3_tree">iso3_tree</a>.</p>
+</div>
+<div class="docblock"><a name="iso3ndx"></a><h3>iso3ndx</h3>
+  <pre>DOCUMENT iso3ndx(origin, delta, var, level, colr, var2=)
+
+  Included for compatibility with earlier versions of yorgl.
+  Please call iso3cenregndx instead. 
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3cenregndx">iso3cenregndx</a>.</p>
+</div>
+<div class="docblock"><a name="iso3zcencrv"></a><h3>iso3zcencrv</h3>
+  <pre>DOCUMENT iso3zcencrv(xyz, var, level, colr, var2=)
+
+  Extract an iso-surface from a variable on a curvilinear 3D grid.
+  Input array var is zone centered and has one extra zone on
+  each side. var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  The result is a list of groups of triangle arrays. 
+  If requested, triangle strips may extend across multiple zones.
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+  The result is a list of triangle arrays.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3zcenreg">iso3zcenreg</a>, <a href="contour.html#iso3cencrv">iso3cencrv</a>, <a href="contour.html#iso3zcencrvndx">iso3zcencrvndx</a>.</p>
+</div>
+<div class="docblock"><a name="iso3zcencrvndx"></a><h3>iso3zcencrvndx</h3>
+  <pre>DOCUMENT iso3zcencrvndx(xyz, var, level, colr, var2=)
+
+  Extract an iso-surface from a variable on a curvilinear 3D grid.
+  Input array var is zone centered and has one extra zone on
+  each side. var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  The result is a list of groups of triangle arrays. 
+  If requested, triangle strips may extend across multiple zones.
+  Triangles are specified by indices into vectors of coordinates, 
+  gradients, and auxiliary variables. 
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3zcenregndx">iso3zcenregndx</a>, <a href="contour.html#iso3zcencrv">iso3zcencrv</a>, <a href="contour.html#iso3cencrvndx">iso3cencrvndx</a>.</p>
+</div>
+<div class="docblock"><a name="iso3zcenreg"></a><h3>iso3zcenreg</h3>
+  <pre>DOCUMENT iso3zcenreg(origin, delta, var, level, colr, var2=)
+
+  Extract an iso-surface from a variable on a rectangular 3D grid.
+  Input array var is zone centered and has one extra zone on
+  each side. var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  The result is a list of groups of triangle arrays. 
+  If requested, triangle strips may extend across multiple zones.
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+  The result is a list of triangle arrays.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3">iso3</a>, iso3crv, iso3strip, iso3stripcrv, slice3stripcrv.</p>
+</div>
+<div class="docblock"><a name="iso3zcenregndx"></a><h3>iso3zcenregndx</h3>
+  <pre>DOCUMENT iso3zcenregndx(origin, delta, var, level, colr, var2=)
+
+  Extract an iso-surface from a variable on a rectangular 3D grid.
+  Input array var is zone centered and has one extra zone on
+  each side. var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  The result is a list of groups of triangle arrays. 
+  If requested, triangle strips may extend across multiple zones.
+  Triangles are specified by indices into vectors of coordinates, 
+  gradients, and auxiliary variables. 
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3zcenreg">iso3zcenreg</a>, <a href="contour.html#iso3cenregndx">iso3cenregndx</a>, <a href="contour.html#iso3zcencrv">iso3zcencrv</a>, <a href="contour.html#iso3zcencrvndx">iso3zcencrvndx</a>.</p>
+</div>
+<div class="docblock"><a name="iso3zcenregngrd"></a><h3>iso3zcenregngrd</h3>
+  <pre>DOCUMENT iso3zcenreg(origin, delta, var, level, colr, var2=)
+
+  Extract an iso-surface from a variable on a rectangular 3D grid.
+  Input array var is zone centered and has one extra zone on
+  each side. var2, if suplied, is an auxiliary variable with
+  the same centering and size as var.
+  The result is a list of groups of triangle arrays. 
+  If requested, triangle strips may extend across multiple zones.
+
+  Uses a 6 tetrahedron decomposition of each hexahedral zone.
+  The result is a list of triangle arrays.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3zcenreg">iso3zcenreg</a>, <a href="contour.html#iso3zcenregndx">iso3zcenregndx</a>, <a href="contour.html#iso3zcencrv">iso3zcencrv</a>.</p>
+</div>
+<div class="docblock"><a name="iso3_tree"></a><h3>iso3_tree</h3>
+  <pre>DOCUMENT iso3_tree(origin, delta, var, level, colr, tree, var2=)
+
+  Extract an iso-surface from a variable on a rectangular 3D grid.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#mak_isotree">mak_isotree</a>, <a href="contour.html#iso3cenreg">iso3cenreg</a>, <a href="contour.html#iso3_treecrv">iso3_treecrv</a>, <a href="contour.html#iso3_treevarr">iso3_treevarr</a>.</p>
+</div>
+<div class="docblock"><a name="iso3_treecrv"></a><h3>iso3_treecrv</h3>
+  <pre>DOCUMENT iso3_treecrv(xyz, var, level, colr, tree, var2=)
+
+  Extract an iso-surface from a variable on an ijk 3D grid.
+  Uses a tree created by mak_isotree.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3_tree">iso3_tree</a>, <a href="contour.html#mak_isotree">mak_isotree</a>, iso3crv.</p>
+</div>
+<div class="docblock"><a name="iso3_treevarr"></a><h3>iso3_treevarr</h3>
+  <pre>DOCUMENT iso3_treevarr(origin, delta, var, level, colr, tree, var2=)
+
+  Extract an iso-surface from a variable on a rectangular 3D grid.
+  The triangles are returned in vertex arrays.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3_tree">iso3_tree</a>, <a href="contour.html#iso3_treecrv">iso3_treecrv</a>, <a href="contour.html#mak_isotree">mak_isotree</a>.</p>
+</div>
+<div class="docblock"><a name="mak_isotree"></a><h3>mak_isotree</h3>
+  <pre>DOCUMENT mak_isotree(var)
+
+  Build an octree for use in making iso-surfaces.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#iso3_tree">iso3_tree</a>, <a href="contour.html#iso3_treecrv">iso3_treecrv</a>, <a href="contour.html#iso3_treevarr">iso3_treevarr</a>, <a href="contour.html#slice_tree">slice_tree</a></p>
+</div>
+<div class="docblock"><a name="mak_slice_treecrv"></a><h3>mak_slice_treecrv</h3>
+  <pre>DOCUMENT mak_slice_treecrv(xyz,guard=)
+
+  Extract a slicing plane on an ijk 3D grid.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#slice_tree">slice_tree</a>, <a href="contour.html#slice_treecrv">slice_treecrv</a>.</p>
+</div>
+<div class="docblock"><a name="slice_tree"></a><h3>slice_tree</h3>
+  <pre>DOCUMENT slice_tree(sizes, origin, delta, point, pl_normal, var2, guard=)
+
+  Extract a slicing plane on a rectangular 3D grid.
+  If var2 is not null, return it's value at each vertex of the
+  slice plane.
+  sizes= [nx,ny,nz] is the grid size.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#slice_treecrv">slice_treecrv</a>, .</p>
+</div>
+<div class="docblock"><a name="slice_treecrv"></a><h3>slice_treecrv</h3>
+  <pre>DOCUMENT slice_treecrv(xyz, point, pl_normal, tree, var2=)
+
+  Extract a slicing plane on an ijk 3D grid using a pre-computed tree.
+  var2 is an optional point-centered variable. If present, 
+  it will be interpolated to the points on
+  the slicing plane. The resulting variable can be 
+  turned into a color and the slice plane can then be smoothly
+  colored using one color per vertex instead of one
+  color per triangle.
+</pre>
+  <p>SEE ALSO: <a href="contour.html#slice_tree">slice_tree</a>, <a href="contour.html#mak_slice_treecrv">mak_slice_treecrv</a>.</p>
+</div>

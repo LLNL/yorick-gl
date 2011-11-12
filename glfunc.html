@@ -1,0 +1,190 @@
+---
+layout: default
+headline: yorick-gl package
+---
+<p class="sectop">Back to <a href="index.html">library index</a>.</p>
+<p class="sectop">Package glfunc (in glfunc.i) - </p>
+<p class="sectop">Index of documented functions or symbols:</p>
+<div class="ndex0s">
+  <div class="ndex1">
+    <h3>A</h3>
+    <p><a href="glfunc.html#always_show_obj3d">always_show_obj3d</a></p>
+    <h3>C</h3>
+    <p><a href="glfunc.html#cage_style3d">cage_style3d</a></p>
+    <p><a href="glfunc.html#ClearList3d">ClearList3d</a></p>
+    <h3>D</h3>
+    <p><a href="glfunc.html#Draw3d">Draw3d</a></p>
+    <h3>E</h3>
+    <p><a href="glfunc.html#endtex3d">endtex3d</a></p>
+    <h3>G</h3>
+    <p><a href="glfunc.html#GetBounds3d">GetBounds3d</a></p>
+    <p><a href="glfunc.html#getGLvers">getGLvers</a></p>
+    <p><a href="glfunc.html#get_currwin3d">get_currwin3d</a></p>
+  </div>
+  <div class="ndex2">
+    <p><a href="glfunc.html#get_fov3d">get_fov3d</a></p>
+    <p><a href="glfunc.html#get_hite3d">get_hite3d</a></p>
+    <p><a href="glfunc.html#get_width3d">get_width3d</a></p>
+    <h3>H</h3>
+    <p><a href="glfunc.html#has_tex3d">has_tex3d</a></p>
+    <p><a href="glfunc.html#has_texcube3d">has_texcube3d</a></p>
+    <h3>I</h3>
+    <p><a href="glfunc.html#inc_seq3d">inc_seq3d</a></p>
+    <h3>L</h3>
+    <p><a href="glfunc.html#line_width3d">line_width3d</a></p>
+    <h3>M</h3>
+    <p><a href="glfunc.html#mousefunc3d">mousefunc3d</a></p>
+    <p><a href="glfunc.html#msmov_val3d">msmov_val3d</a></p>
+  </div>
+  <div class="ndex3">
+    <h3>O</h3>
+    <p><a href="glfunc.html#out_ccw3d">out_ccw3d</a></p>
+    <h3>P</h3>
+    <p><a href="glfunc.html#preptex3d">preptex3d</a></p>
+    <h3>S</h3>
+    <p><a href="glfunc.html#set_fov3d">set_fov3d</a></p>
+    <h3>U</h3>
+    <p><a href="glfunc.html#update_list3d">update_list3d</a></p>
+    <p><a href="glfunc.html#use_array3d">use_array3d</a></p>
+    <p><a href="glfunc.html#use_list3d">use_list3d</a></p>
+    <h3>W</h3>
+    <p><a href="glfunc.html#win3d">win3d</a></p>
+    <p><a href="glfunc.html#winkill3d">winkill3d</a></p>
+  </div>
+</div>
+<div class="docblock"><a name="always_show_obj3d"></a><h3>always_show_obj3d</h3>
+  <pre>DOCUMENT gl_always_show_obj(flag)
+ Draw objects while rotating if flag is non-zero.</pre>
+  
+</div>
+<div class="docblock"><a name="cage_style3d"></a><h3>cage_style3d</h3>
+  <pre>DOCUMENT cage_style3d(style)
+ If style is zero, the limits for the "cage" surrounding the
+ "interesting" data volume will be the bounds of all
+ objects in the scene.
+ See also: cage_limits3d, getcage_limits3d</pre>
+  
+</div>
+<div class="docblock"><a name="ClearList3d"></a><h3>ClearList3d</h3>
+  <pre>DOCUMENT ClearList3d
+ Clear both 3D display lists.
+</pre>
+  <p>SEE ALSO: DrawList3d, ClearDirectList3d, ClearCachedList3d</p>
+</div>
+<div class="docblock"><a name="Draw3d"></a><h3>Draw3d</h3>
+  <pre>DOCUMENT Draw3d
+ Draw both 3D display lists, handling all preparation and clean-up.
+</pre>
+  <p>SEE ALSO: <a href="glfunc.html#ClearList3d">ClearList3d</a>, ClearDirectList3d, ClearCachedList3d</p>
+</div>
+<div class="docblock"><a name="endtex3d"></a><h3>endtex3d</h3>
+  <pre>DOCUMENT endtex3d(void)
+ finish using a 3D texture.</pre>
+  
+</div>
+<div class="docblock"><a name="GetBounds3d"></a><h3>GetBounds3d</h3>
+  <pre>DOCUMENT GetBounds3d
+ Compute the bounding box for all 3D objects.
+ Function returns non-zero if there is at least one object.
+</pre>
+  <p>SEE ALSO: DrawList3d, <a href="glfunc.html#ClearList3d">ClearList3d</a>, GetBoundsDirectList3d, GetBoundsCachedList3d</p>
+</div>
+<div class="docblock"><a name="getGLvers"></a><h3>getGLvers</h3>
+  <pre>DOCUMENT getGLvers
+ Get the version number for OpenGL.</pre>
+  
+</div>
+<div class="docblock"><a name="get_currwin3d"></a><h3>get_currwin3d</h3>
+  <pre>DOCUMENT get_currwin3d()
+Return the number of the current 3D window.</pre>
+  
+</div>
+<div class="docblock"><a name="get_fov3d"></a><h3>get_fov3d</h3>
+  <pre>DOCUMENT get_fov3d
+ Returns the field of view (in degrees) for the current 3D window.</pre>
+  
+</div>
+<div class="docblock"><a name="get_hite3d"></a><h3>get_hite3d</h3>
+  <pre>DOCUMENT get_hite3d(void)
+ return the height of the current OpenGL window in pixels.</pre>
+  
+</div>
+<div class="docblock"><a name="get_width3d"></a><h3>get_width3d</h3>
+  <pre>DOCUMENT get_width3d(void)
+ return the width of the current OpenGL window in pixels.</pre>
+  
+</div>
+<div class="docblock"><a name="has_tex3d"></a><h3>has_tex3d</h3>
+  <pre>DOCUMENT has_tex3d()
+ result is non-zero if 3D textures are supported.</pre>
+  
+</div>
+<div class="docblock"><a name="has_texcube3d"></a><h3>has_texcube3d</h3>
+  <pre>DOCUMENT has_texcube3d()
+ result is non-zero if cube map textures are supported.</pre>
+  
+</div>
+<div class="docblock"><a name="inc_seq3d"></a><h3>inc_seq3d</h3>
+  <pre>DOCUMENT inc_seq3d(void)
+ increment the OpenGL sequence number. Not a user routine.</pre>
+  
+</div>
+<div class="docblock"><a name="line_width3d"></a><h3>line_width3d</h3>
+  <pre>DOCUMENT line_width3d(void)
+ Set the width in pixels for a polyline in OpenGL.</pre>
+  
+</div>
+<div class="docblock"><a name="mousefunc3d"></a><h3>mousefunc3d</h3>
+  <pre>DOCUMENT mousefunc3d(val)
+ controls the efect of mouse motion in an OpenGL window.
+ val==1 means rotate, val==2 means zoom, and val==3 means pan.</pre>
+  
+</div>
+<div class="docblock"><a name="msmov_val3d"></a><h3>msmov_val3d</h3>
+  <pre>DOCUMENT msmov_val3d(void)
+ set the number of pixels the mouse must move before
+ the model should be rotated.</pre>
+  
+</div>
+<div class="docblock"><a name="out_ccw3d"></a><h3>out_ccw3d</h3>
+  <pre>DOCUMENT out_ccw3d(dir_flag)
+ set the direction (zero for clockwise, else CCW) for the
+ front face of polygons.</pre>
+  
+</div>
+<div class="docblock"><a name="preptex3d"></a><h3>preptex3d</h3>
+  <pre>DOCUMENT preptex3d(void)
+ prepare an OpenGL state suitable for the use of 3D textures.</pre>
+  
+</div>
+<div class="docblock"><a name="set_fov3d"></a><h3>set_fov3d</h3>
+  <pre>DOCUMENT set_fov3d(fov)
+ Set the field of view (in degrees) for the current 3D window.</pre>
+  
+</div>
+<div class="docblock"><a name="update_list3d"></a><h3>update_list3d</h3>
+  <pre>DOCUMENT update_list3d(void)
+ update an existing OpenGL display list.</pre>
+  
+</div>
+<div class="docblock"><a name="use_array3d"></a><h3>use_array3d</h3>
+  <pre>DOCUMENT use_array3d(flag)
+ Use OpenGL arrays if flag is non-zero.</pre>
+  
+</div>
+<div class="docblock"><a name="use_list3d"></a><h3>use_list3d</h3>
+  <pre>DOCUMENT use_list3d(flag)
+ Use an OpenGL display list if flag is non-zero.</pre>
+  
+</div>
+<div class="docblock"><a name="win3d"></a><h3>win3d</h3>
+  <pre>DOCUMENT win3d(num, width, height)
+ Create OpenGL output window number num.
+ Window will have specified width and height (in pixels).</pre>
+  
+</div>
+<div class="docblock"><a name="winkill3d"></a><h3>winkill3d</h3>
+  <pre>DOCUMENT winkill3d(num)
+ Close OpenGL output window number num.</pre>
+  
+</div>

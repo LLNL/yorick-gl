@@ -1,0 +1,78 @@
+---
+layout: default
+headline: yorick-gl package
+---
+<p class="sectop">Back to <a href="index.html">library index</a>.</p>
+<p class="sectop">Package slicenew (in slicenew.i) - </p>
+<p class="sectop">Index of documented functions or symbols:</p>
+<div class="ndex0s">
+  <div class="ndex1">
+    <h3>N</h3>
+    <p><a href="slicenew.html#nuslice2">nuslice2</a></p>
+  </div>
+  <div class="ndex2">
+    <p><a href="slicenew.html#nuslice2x">nuslice2x</a></p>
+    <h3>S</h3>
+  </div>
+  <div class="ndex3">
+    <p><a href="slicenew.html#slice2only">slice2only</a></p>
+    <p><a href="slicenew.html#slice2_precision">slice2_precision</a></p>
+  </div>
+</div>
+<div class="docblock"><a name="nuslice2"></a><h3>nuslice2</h3>
+  <pre>DOCUMENT slice2, plane, tris
+
+  Slice an array of triangles, retaining only those triangles or
+  parts of triangles on the positive side of PLANE, that is,
+  the side where xyz(+)*PLANE(+:1:3)-PLANE(4) > 0.0.
+
+  In order to plot two intersecting slices, one could
+  slice (for example) the horizontal plane twice (slice2x) -
+  first with the plane of the vertical slice, then with minus
+  that same plane.  Then, plot first the back part of the
+  slice, then the vertical slice, then the front part of the
+  horizontal slice.  Of course, the vertical plane could
+  be the one to be sliced, and "back" and "front" vary
+  depending on the view point, but the general idea always
+  works.
+</pre>
+  <p>SEE ALSO: slice2x, <a href="slicenew.html#slice2_precision">slice2_precision</a></p>
+</div>
+<div class="docblock"><a name="nuslice2x"></a><h3>nuslice2x</h3>
+  <pre>DOCUMENT slice2, plane, tris
+
+  Slice a polygon list, retaining only those triangles or
+  parts of triangles on the positive side of PLANE, that is,
+  the side where xyz(+)*PLANE(+:1:3)-PLANE(4) > 0.0.
+</pre>
+  <p>SEE ALSO: slice2, <a href="slicenew.html#slice2_precision">slice2_precision</a></p>
+</div>
+<div class="docblock"><a name="slice2only"></a><h3>slice2only</h3>
+  <pre>DOCUMENT slice2, plane, tris
+
+  Slice an array of triangles, retaining only those triangles or
+  parts of triangles on the positive side of PLANE, that is,
+  the side where xyz(+)*PLANE(+:1:3)-PLANE(4) > 0.0.
+
+  In order to plot two intersecting slices, one could
+  slice (for example) the horizontal plane twice (slice2x) -
+  first with the plane of the vertical slice, then with minus
+  that same plane.
+</pre>
+  <p>SEE ALSO: slice2x, <a href="slicenew.html#slice2_precision">slice2_precision</a></p>
+</div>
+<div class="docblock"><a name="slice2_precision"></a><h3>slice2_precision</h3>
+  <pre>DOCUMENT slice2_precision= precision
+  Controls how slice2 (or slice2x) handles points very close to
+  the slicing plane.  PRECISION should be a positive number or zero.
+  Zero PRECISION means to clip exactly to the plane, with points
+  exactly on the plane acting as if they were slightly on the side
+  the normal points toward.  Positive PRECISION means that edges
+  are clipped to parallel planes a distance PRECISION on either
+  side of the given plane.  (Polygons lying entirely between these
+  planes are completely discarded.)
+
+  Default value is 0.0.
+</pre>
+  <p>SEE ALSO: slice2, slice2x</p>
+</div>

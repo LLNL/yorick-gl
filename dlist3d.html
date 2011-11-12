@@ -1,0 +1,434 @@
+---
+layout: default
+headline: yorick-gl package
+---
+<p class="sectop">Back to <a href="index.html">library index</a>.</p>
+<p class="sectop">Package dlist3d (in dlist3d.i) - </p>
+<p class="sectop">Index of documented functions or symbols:</p>
+<div class="ndex0s">
+  <div class="ndex1">
+    <h3>C</h3>
+    <p><a href="dlist3d.html#clear3d">clear3d</a></p>
+    <p><a href="dlist3d.html#clear3d_cache">clear3d_cache</a></p>
+    <p><a href="dlist3d.html#clear3d_direct">clear3d_direct</a></p>
+    <p><a href="dlist3d.html#CollapseTri">CollapseTri</a></p>
+    <h3>D</h3>
+    <p><a href="dlist3d.html#draw3d">draw3d</a></p>
+    <h3>G</h3>
+    <p><a href="dlist3d.html#getpix3d">getpix3d</a></p>
+    <p><a href="dlist3d.html#get_centroid3d">get_centroid3d</a></p>
+    <p><a href="dlist3d.html#get_lims3d">get_lims3d</a></p>
+    <p><a href="dlist3d.html#get_normal3d">get_normal3d</a></p>
+    <h3>L</h3>
+    <p><a href="dlist3d.html#light3d">light3d</a></p>
+  </div>
+  <div class="ndex2">
+    <p><a href="dlist3d.html#lookat3d">lookat3d</a></p>
+    <h3>P</h3>
+    <p><a href="dlist3d.html#palette3d">palette3d</a></p>
+    <p><a href="dlist3d.html#plcell3d">plcell3d</a></p>
+    <p><a href="dlist3d.html#plcolrsurf3d">plcolrsurf3d</a></p>
+    <p><a href="dlist3d.html#plf3d">plf3d</a></p>
+    <p><a href="dlist3d.html#plglyphs3d">plglyphs3d</a></p>
+    <p><a href="dlist3d.html#pllines3d">pllines3d</a></p>
+    <p><a href="dlist3d.html#plm3d">plm3d</a></p>
+    <p><a href="dlist3d.html#plpoints3d">plpoints3d</a></p>
+    <p><a href="dlist3d.html#plpoly3d">plpoly3d</a></p>
+    <p><a href="dlist3d.html#plqarray3d">plqarray3d</a></p>
+    <p><a href="dlist3d.html#plqstrips3d">plqstrips3d</a></p>
+    <p><a href="dlist3d.html#plsurf3d">plsurf3d</a></p>
+  </div>
+  <div class="ndex3">
+    <p><a href="dlist3d.html#pltarray3d">pltarray3d</a></p>
+    <p><a href="dlist3d.html#pltex2dvol">pltex2dvol</a></p>
+    <p><a href="dlist3d.html#pltex3dvol">pltex3dvol</a></p>
+    <p><a href="dlist3d.html#pltivarray3d">pltivarray3d</a></p>
+    <p><a href="dlist3d.html#pltivstrips3d">pltivstrips3d</a></p>
+    <p><a href="dlist3d.html#pltrilists3d">pltrilists3d</a></p>
+    <p><a href="dlist3d.html#pltstrips3d">pltstrips3d</a></p>
+    <p><a href="dlist3d.html#pltvarray3d">pltvarray3d</a></p>
+    <p><a href="dlist3d.html#prtview3d">prtview3d</a></p>
+    <p><a href="dlist3d.html#putpix3d">putpix3d</a></p>
+    <h3>S</h3>
+    <p><a href="dlist3d.html#SortTri">SortTri</a></p>
+    <p><a href="dlist3d.html#stdview3d">stdview3d</a></p>
+  </div>
+</div>
+<div class="docblock"><a name="clear3d"></a><h3>clear3d</h3>
+  <pre>DOCUMENT clear3d
+  Clear the 3D "cached" and "direct" display lists.
+  Clear the screen.</pre>
+  
+</div>
+<div class="docblock"><a name="clear3d_cache"></a><h3>clear3d_cache</h3>
+  <pre>DOCUMENT clear3d_cache
+  Clear the 3D "cached" display list.</pre>
+  
+</div>
+<div class="docblock"><a name="clear3d_direct"></a><h3>clear3d_direct</h3>
+  <pre>DOCUMENT clear3d_direct
+  Clear the 3D "direct" display list.</pre>
+  
+</div>
+<div class="docblock"><a name="CollapseTri"></a><h3>CollapseTri</h3>
+  <pre>DOCUMENT CollapseTri(tris)
+
+  This function is used to collapse an arbitrary number
+  of triangle arrays into a single triangle array.
+  tris must be a TriArrayGrp (which can point to another
+  TriArrayGrp, etc.).
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltrilists3d">pltrilists3d</a>, sortTri</p>
+</div>
+<div class="docblock"><a name="draw3d"></a><h3>draw3d</h3>
+  <pre>DOCUMENT draw3d
+  Draw the current 3D "cached" and "direct" display lists.
+  (Ordinarily triggered automatically when the drawing changes.)</pre>
+  
+</div>
+<div class="docblock"><a name="getpix3d"></a><h3>getpix3d</h3>
+  <pre>DOCUMENT getpix3d
+
+  Read pixels from an OpenGL window.</pre>
+  
+</div>
+<div class="docblock"><a name="get_centroid3d"></a><h3>get_centroid3d</h3>
+  <pre>DOCUMENT get_centroid3d(xyz, nxyz)
+      or get_centroid3d(xyz)
+
+  return 3D centroids for polygons with vertices XYZ.  If NXYZ is
+  specified, XYZ should be 3-by-sum(nxyz), with NXYZ being the
+  list of numbers of vertices for each polygon (as for the plfp
+  function).  If NXYZ is not specified, XYZ should be a quadrilateral
+  mesh, 3-by-ni-by-nj (as for the plf function).  In the first case,
+  the return value is 3-by-numberof(NXYZ); in the second case, the
+  return value is 3-by-(ni-1)-by-(nj-1).
+
+  The centroids are constructed as the mean value of all vertices
+  of each polygon.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#get_normal3d">get_normal3d</a>, get_light3d</p>
+</div>
+<div class="docblock"><a name="get_lims3d"></a><h3>get_lims3d</h3>
+  <pre>DOCUMENT get_lims3d
+  Compute and return a bounding box containing everything 
+  in the "cached" 3D display list.</pre>
+  
+</div>
+<div class="docblock"><a name="get_normal3d"></a><h3>get_normal3d</h3>
+  <pre>DOCUMENT get_normal3d(xyz, nxyz)
+      or get_normal3d(xyz)
+
+  return 3D normals for polygons with vertices XYZ.  If NXYZ is
+  specified, XYZ should be 3-by-sum(nxyz), with NXYZ being the
+  list of numbers of vertices for each polygon (as for the plfp
+  function).  If NXYZ is not specified, XYZ should be a quadrilateral
+  mesh, 3-by-ni-by-nj (as for the plf function).  In the first case,
+  the return value is 3-by-numberof(NXYZ); in the second case, the
+  return value is 3-by-(ni-1)-by-(nj-1).
+
+  The normals are constructed from the cross product of the lines
+  joining the midpoints of two edges which as nearly quarter the
+  polygon as possible (the medians for a quadrilateral).  No check
+  is made that these not be parallel; the returned "normal" is
+  [0,0,0] in that case.  Also, if the polygon vertices are not
+  coplanar, the "normal" has no precisely definable meaning.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#get_centroid3d">get_centroid3d</a></p>
+</div>
+<div class="docblock"><a name="light3d"></a><h3>light3d</h3>
+  <pre>DOCUMENT light3d, ambient=a_level, diffuse=d_level,
+         specular=s_level, spower=n, sdir=xyz
+  Sets lighting properties for 3D shading effects.
+  A surface will be shaded according to its orientation
+  relative to the viewing direction.
+
+  The ambient level A_LEVEL is a light level (arbitrary units)
+  that is added to every surface independent of its orientation.
+
+  The diffuse level D_LEVEL is a light level which is proportional
+  to cos(theta), where theta is the angle between the surface
+  normal and the viewing direction, so that surfaces directly
+  facing the viewer are bright, while surfaces viewed edge on are
+  unlit (and surfaces facing away, if drawn, are shaded as if they
+  faced the viewer).
+
+  The specular level S_LEVEL is a light level proportional to a high
+  power spower=N of 1+cos(alpha), where alpha is the angle between
+  the specular reflection angle and the viewing direction.  The light
+  source for the calculation of alpha lies in the direction XYZ (a
+  3 element vector) in the viewer's coordinate system at infinite
+  distance.
+
+EXAMPLES:
+  light3d, diffuse=.1, specular=1., sdir=[0,0,-1]
+    (dramatic "tail lighting" effect)
+  light3d, diffuse=.5, specular=1., sdir=[1,.5,1]
+    (classic "over your right shoulder" lighting)</pre>
+  
+</div>
+<div class="docblock"><a name="lookat3d"></a><h3>lookat3d</h3>
+  <pre>DOCUMENT lookat3d(eye,center,up)
+  Sets the 3D viewing transform so that the viewer is
+  at "eye, the center of the view is "center", and 
+  "up" points upward.
+</pre>
+  <p>SEE ALSO: stdview3, prtview3</p>
+</div>
+<div class="docblock"><a name="palette3d"></a><h3>palette3d</h3>
+  <pre>DOCUMENT palette3d, palette_name
+  Select a color palette to be used, for example,
+to color slices through 3D meshes.
+Uses the same palettes as the 2D graphics package.</pre>
+  <p>SEE ALSO: palette</p>
+</div>
+<div class="docblock"><a name="plcell3d"></a><h3>plcell3d</h3>
+  <pre>DOCUMENT plcell3d(corners, color)
+
+  Draws a cell array in 3D using OpenGL.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plpoly3d">plpoly3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="plcolrsurf3d"></a><h3>plcolrsurf3d</h3>
+  <pre>DOCUMENT plcolrsurf3d(xyz, norm, color, flip=)
+
+  Draws a lit 2D mesh in 3D using OpenGL.
+  Color varies across the mesh and is specified at mesh vertices.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plsurf3d">plsurf3d</a>, <a href="dlist3d.html#plm3d">plm3d</a>, <a href="dlist3d.html#plpoly3d">plpoly3d</a>, <a href="dlist3d.html#plcell3d">plcell3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="plf3d"></a><h3>plf3d</h3>
+  <pre>DOCUMENT plf3d(xyz, color)
+
+  Fills a logically 2D mesh in 3D using OpenGL.
+  color is (3 or 4)-by-(nx-1)-by-(ny-1).
+  The initial index of color is 3 (for RGB colors) or 4 (for 
+  translucent RGBA colors).
+  Each zone is filled with a single color.
+  The surface does not "reflect" light, so there will not be any shiny highlights.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plm3d">plm3d</a>, <a href="dlist3d.html#plsurf3d">plsurf3d</a>, <a href="dlist3d.html#plcolrsurf3d">plcolrsurf3d</a>, <a href="dlist3d.html#plcell3d">plcell3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="plglyphs3d"></a><h3>plglyphs3d</h3>
+  <pre>DOCUMENT plglyphs3d(xyz, scal, theta, phi, color)
+
+  Draws a set of Glyphs using OpenGL. The glyphs are located
+  at xyz and have color "color". The base glyph size is multiplied
+  scal and the glyph axis points in the direction (theta, phi).
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plpoints3d">plpoints3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="pllines3d"></a><h3>pllines3d</h3>
+  <pre>DOCUMENT pllines3d(xyz, color)
+
+  Draws a Polyline in 3D using OpenGL.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plpoly3d">plpoly3d</a>, <a href="dlist3d.html#plcell3d">plcell3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="plm3d"></a><h3>plm3d</h3>
+  <pre>DOCUMENT plm3d(xyz, color)
+
+  Draws a logically 2D mesh in 3D using OpenGL.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plpoly3d">plpoly3d</a>, <a href="dlist3d.html#plcell3d">plcell3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="plpoints3d"></a><h3>plpoints3d</h3>
+  <pre>DOCUMENT plpoints3d(xyz, color)
+
+  Draws a set of Points in 3D using OpenGL.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plpoly3d">plpoly3d</a>, <a href="dlist3d.html#plcell3d">plcell3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="plpoly3d"></a><h3>plpoly3d</h3>
+  <pre>DOCUMENT plpoly3d(nv, xyz, color, norm, draw_edge=)
+
+  Draws a set of filled polygons in 3D using OpenGL.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plcell3d">plcell3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="plqarray3d"></a><h3>plqarray3d</h3>
+  <pre>DOCUMENT plqarray3d(xyz, norm, color, nquad, draw_edge=)
+
+  Draws a Quadrangle Array in 3D using OpenGL.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltarray3d">pltarray3d</a>, <a href="dlist3d.html#plqstrips3d">plqstrips3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="plqstrips3d"></a><h3>plqstrips3d</h3>
+  <pre>DOCUMENT plqstrips3d(nv, xyz, color, norm, draw_edge=)
+
+  Draws a set of quad-strips in 3D using OpenGL.
+  xyz is 3-by-2-by-nvert.
+  nv is the number of vertices per quad strip (i.e. the length 
+  of the run in the last index of xyz).
+  nvert= sum(nv)
+  nstrip= numberof(nv);
+  nquad= nvert-nstrip;
+  color is 3-by-ncolor. ncolor can be 1 (all quads the same color),
+  numberof(nv)  (one color per strip), or
+  nquad (one color per quad). color will always be increased in
+  size to nquad before being stored.
+  norm can be 3-by-nquad for flat shading or 3-by-2-by-nvert
+  for smooth shading. If norm is not specified, lighting
+  will not be used (the specified color will be used directly).
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltrilists3d">pltrilists3d</a>, <a href="dlist3d.html#pltstrips3d">pltstrips3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="plsurf3d"></a><h3>plsurf3d</h3>
+  <pre>DOCUMENT plsurf3d(xyz, norm, color, flip=)
+
+  Draws a lit 2D mesh in 3D using OpenGL.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plcolrsurf3d">plcolrsurf3d</a>, <a href="dlist3d.html#plm3d">plm3d</a>, <a href="dlist3d.html#plpoly3d">plpoly3d</a>, <a href="dlist3d.html#plcell3d">plcell3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="pltarray3d"></a><h3>pltarray3d</h3>
+  <pre>DOCUMENT pltarray3d(xyz, norm, color, ntri, cubemap, emit, draw_edge=)
+
+  Draws a Triangle Array in 3D using OpenGL.
+  pltrilists3d is normally called instead of this
+  lower level routine.
+  If cubemap is non-zero, specular lighting is handled by 
+  cube map textures.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltrilists3d">pltrilists3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="pltex2dvol"></a><h3>pltex2dvol</h3>
+  <pre>DOCUMENT pltex2dvol
+
+  Draws a volume visualization of a 3D cell array using OpenGL.
+  Uses 2D textures.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltex3dvol">pltex3dvol</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a>, <a href="dlist3d.html#pltex3dvol">pltex3dvol</a></p>
+</div>
+<div class="docblock"><a name="pltex3dvol"></a><h3>pltex3dvol</h3>
+  <pre>DOCUMENT pltex3dvol
+
+  Draws a volume visualization of a 3D cell array using OpenGL.
+  Uses 3D textures.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltex2dvol">pltex2dvol</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="pltivarray3d"></a><h3>pltivarray3d</h3>
+  <pre>DOCUMENT pltivarray3d
+
+  Draws a Triangle Array in 3D using OpenGL.
+  Triangles are specified using indices into a list of vertices,
+  normals, and colors.
+  pltrilists3d is normally called instead of this
+  lower level routine.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltarray3d">pltarray3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#pltrilists3d">pltrilists3d</a></p>
+</div>
+<div class="docblock"><a name="pltivstrips3d"></a><h3>pltivstrips3d</h3>
+  <pre>DOCUMENT pltivstrips3d(nv, ndx, xyz, norm, color, draw_edge=)
+
+  Draws a set of triangle-strips in 3D using OpenGL.
+  pltrilists3d is normally called instead of this 
+  lower level routine.
+  xyz and norm are 3-by-nvert.
+  ndx holds the vertex numbers (indices into xyz or norm)
+  of the vertices in the tristrips.
+  nv is the number of vertices per triangle strip (i.e. the length 
+  of the run in the last index of ndx).
+  nvert= sum(nv)
+  nstrip= numberof(nv);
+  ntri= nvert-2*nstrip;
+  color is normally 3-by-ncolor. ncolor can be 1 (all tris the 
+  same color), numberof(nv)  (one color per strip), or
+  ntri (one color per triangle). color will always be increased in
+  size to ntri before being stored.
+  If color is 4-by-ncolor, the 4th element is the alpha value. 
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltrilists3d">pltrilists3d</a>, pltristrips3d, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="pltrilists3d"></a><h3>pltrilists3d</h3>
+  <pre>DOCUMENT pltrilists3d(tris,flip=,offset=,cubemap=,emit=)
+
+  This function is used to display an arbitrary number
+  of triangle strips or arrays in 3D. An example is the 
+  output of an iso-surface routine.
+  tris is either a TriStripGrp, a TriArrayGrp, or a TriVertexGrp.
+  flip, if present, is a 3 element vector that multiplies
+  the x, y, and z coords of every point and normal.
+  Ordinarily, all elements are either +1 or -1.
+  If cubemap is non-zero, perform specular lighting using
+  cube map textures.
+  A TriStripGrp is composed of several triangle strips.
+  It has a pointer to the next TriStripGrp.
+  A TriArrayGrp is an array of triangles with a pointer to the
+  next TriArrayGrp. 
+  A TriVertexGrp is like a TriArrayGrp except that the
+  vertices and normals have been gathered into vectors 
+  and each triangle is specified by three indices
+  into these vectors.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#plcell3d">plcell3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="pltstrips3d"></a><h3>pltstrips3d</h3>
+  <pre>DOCUMENT pltstrips3d(nv, xyz, color, norm, draw_edge=)
+
+  Draws a set of triangle-strips in 3D using OpenGL.
+  pltrilists3d is normally called instead of this 
+  lower level routine.
+  xyz is 3-by-nvert.
+  nv is the number of vertices per triangle strip (i.e. the length 
+  of the run in the last index of xyz).
+  nvert= sum(nv)
+  nstrip= numberof(nv);
+  ntri= nvert-2*nstrip;
+  color is normally 3-by-ncolor. ncolor can be 1 (all tris the 
+  same color), numberof(nv)  (one color per strip), or
+  ntri (one color per triangle). color will always be increased in
+  size to ntri before being stored.
+  If color is 4-by-ncolor, the 4th element is the alpha value. 
+  norm can be 3-by-ntri for flat shading or 3-by-nvert
+  for smooth shading. If norm is not specified, lighting
+  will not be used (the specified color will be used directly).
+
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltrilists3d">pltrilists3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#light3d">light3d</a>, <a href="glfunc.html#win3d">win3d</a></p>
+</div>
+<div class="docblock"><a name="pltvarray3d"></a><h3>pltvarray3d</h3>
+  <pre>DOCUMENT pltvarray3d
+
+  Draws a Triangle Array in 3D using OpenGL.
+  Triangles are specified using indices into a list of vertices,
+  normals, and colors.
+  pltrilists3d is normally called instead of this
+  lower level routine.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltarray3d">pltarray3d</a>, <a href="dlist3d.html#pltivarray3d">pltivarray3d</a>, <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#pltrilists3d">pltrilists3d</a></p>
+</div>
+<div class="docblock"><a name="prtview3d"></a><h3>prtview3d</h3>
+  <pre>DOCUMENT prtview3d
+  Print the parameters for the current viewing 
+  transformation.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#lookat3d">lookat3d</a>, stdview3</p>
+</div>
+<div class="docblock"><a name="putpix3d"></a><h3>putpix3d</h3>
+  <pre>DOCUMENT putpix3d
+
+  Draws pixels into an OpenGL window.
+</pre>
+  <p>SEE ALSO: clear3</p>
+</div>
+<div class="docblock"><a name="SortTri"></a><h3>SortTri</h3>
+  <pre>DOCUMENT SortTri(tris)
+
+  This function performs a depth sort of a triangle
+  array. It uses the current viewpoint.
+  The resulting triangle array should display correctly
+  with translucency when viewed from the same point.
+  Rotating the scene may lead to incorrect results
+  if the triangles are translucent.
+  tris must be a TriArrayGrp.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#pltrilists3d">pltrilists3d</a>, collapseTri</p>
+</div>
+<div class="docblock"><a name="stdview3d"></a><h3>stdview3d</h3>
+  <pre>DOCUMENT stdview3d
+  Sets the 3D viewing transform to a default value that
+makes the whole scene visible.
+</pre>
+  <p>SEE ALSO: <a href="dlist3d.html#lookat3d">lookat3d</a>, <a href="dlist3d.html#prtview3d">prtview3d</a></p>
+</div>
