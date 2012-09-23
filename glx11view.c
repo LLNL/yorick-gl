@@ -147,6 +147,7 @@ void yglGetPixels(long nx, long ny, unsigned char *pix)
   GLint align_old;
 
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   /* Make the rendering context current */
   yglMakeCurrent(glCurrWin3d);
 
@@ -159,12 +160,14 @@ void yglGetPixels(long nx, long ny, unsigned char *pix)
   glPixelStorei(GL_PACK_ALIGNMENT,1);
   glReadPixels(0, 0, nx, ny, GL_RGB, GL_UNSIGNED_BYTE, pix);
   glPixelStorei(GL_PACK_ALIGNMENT,align_old);
+  ygl_fpemask(1);
 }
 
 void yglPutPixels(long nx, long ny, unsigned char *pix)
 {
   if(!glCurrWin3d) return;
   /* Make the rendering context current */
+  ygl_fpemask(0);
   yglMakeCurrent(glCurrWin3d);
 
   /* save coord xform */
@@ -183,4 +186,5 @@ void yglPutPixels(long nx, long ny, unsigned char *pix)
   glMatrixMode(GL_PROJECTION);
   glPopMatrix();
   glMatrixMode(GL_MODELVIEW);
+  ygl_fpemask(1);
 }

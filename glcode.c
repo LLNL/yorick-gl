@@ -466,7 +466,9 @@ void yglColrSurf(long do_alpha, long nx, long ny, float *xyz, float *norm, float
 
 void yglLineWidth(double width)
 {
+  ygl_fpemask(0);
   glLineWidth((float)width);
+  ygl_fpemask(1);
 }
 
 void yglLines(long nvert, float *xyz, float *colr)
@@ -521,8 +523,10 @@ void yglPoints(long nvert, float *xyz, float *colr)
 
 void yglFrontFace3d(long dir)
 {
+  ygl_fpemask(0);
   if(dir) glFrontFace(GL_CCW);
   else glFrontFace(GL_CW);
+  ygl_fpemask(1);
 }
 
 void yglGetCenter3d(double *center)

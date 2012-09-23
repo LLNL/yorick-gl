@@ -43,6 +43,7 @@ void yglDraw3d(glWinProp *theWin3d)
      and finish drawing.
   */
   if(!theWin3d) return;
+  ygl_fpemask(0);
   glCurrWin3d= theWin3d;
   yglPrepDraw(theWin3d);
   yglUpdateLight();
@@ -56,12 +57,15 @@ void yglDraw3d(glWinProp *theWin3d)
   yglFinFrame();
   theWin3d->dirty= 0;
   glCurrWin3d= oldWin3d;
+  ygl_fpemask(1);
 }
 
 void yglClearList3d(void)
 {
+  ygl_fpemask(0);
   yglClearCachedList3d();
   yglClearDirectList3d();
+  ygl_fpemask(1);
 }
 
 void yglClearCachedList3d(void)
@@ -204,12 +208,20 @@ long yglGetBounds3d(yBox3D *box)
 
 long yglGetBoundsDirectList3d(yBox3D *box)
 {
-  return yglGetBoundsList3d(box, yListDirectHead);
+  long i;
+  ygl_fpemask(0);
+  i = yglGetBoundsList3d(box, yListDirectHead);
+  ygl_fpemask(1);
+  return i;
 }
 
 long yglGetBoundsCachedList3d(yBox3D *box)
 {
-  return yglGetBoundsList3d(box, yListCachedHead);
+  long i;
+  ygl_fpemask(0);
+  i = yglGetBoundsList3d(box, yListCachedHead);
+  ygl_fpemask(1);
+  return i;
 }
 
 long yglGetBoundsList3d(yBox3D *box, yList3d_Elem *elem)
@@ -388,6 +400,7 @@ void yglPolys3d(long npolys, long *len, double *xyz, double *norm,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -425,6 +438,7 @@ void yglPolys3d(long npolys, long *len, double *xyz, double *norm,
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, nvert, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglGlyphs3d(long nglyph, double *origin, double *scal,
@@ -441,6 +455,7 @@ void yglGlyphs3d(long nglyph, double *origin, double *scal,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -471,6 +486,7 @@ void yglGlyphs3d(long nglyph, double *origin, double *scal,
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, nglyph, data->origin);
+  ygl_fpemask(1);
 }
 
 void yglCells3d(long nx, long ny, double *corners,
@@ -488,6 +504,7 @@ void yglCells3d(long nx, long ny, double *corners,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -520,6 +537,7 @@ void yglCells3d(long nx, long ny, double *corners,
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, 2, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglPlm3d(long nx, long ny, double *xyz, double *colr)
@@ -534,6 +552,7 @@ void yglPlm3d(long nx, long ny, double *xyz, double *colr)
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -561,6 +580,7 @@ void yglPlm3d(long nx, long ny, double *xyz, double *colr)
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, nx*ny, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglPlf3d(long nx, long ny, double *xyz, double *colr)
@@ -575,6 +595,7 @@ void yglPlf3d(long nx, long ny, double *xyz, double *colr)
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -602,6 +623,7 @@ void yglPlf3d(long nx, long ny, double *xyz, double *colr)
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, nx*ny, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglSurf3d(long do_alpha, long nx, long ny, double *xyz, 
@@ -617,6 +639,7 @@ void yglSurf3d(long do_alpha, long nx, long ny, double *xyz,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -646,6 +669,7 @@ void yglSurf3d(long do_alpha, long nx, long ny, double *xyz,
   dcolr[2]= (float) colr[2];
   /* compute and save the bounding box */
   yglSetLims3d(elem, nx*ny, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglColrsurf3d(long do_alpha, long nx, long ny, double *xyz, 
@@ -661,6 +685,7 @@ void yglColrsurf3d(long do_alpha, long nx, long ny, double *xyz,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -692,6 +717,7 @@ void yglColrsurf3d(long do_alpha, long nx, long ny, double *xyz,
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, nx*ny, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglLines3d(long nvert, double *xyz, double *colr)
@@ -706,6 +732,7 @@ void yglLines3d(long nvert, double *xyz, double *colr)
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -732,6 +759,7 @@ void yglLines3d(long nvert, double *xyz, double *colr)
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, nvert, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglPoints3d(long nvert, double *xyz, double *colr)
@@ -746,6 +774,7 @@ void yglPoints3d(long nvert, double *xyz, double *colr)
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -772,6 +801,7 @@ void yglPoints3d(long nvert, double *xyz, double *colr)
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, nvert, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglTstrips3d(long nstrips, long *len, double *xyz,
@@ -796,6 +826,7 @@ void yglTstrips3d(long nstrips, long *len, double *xyz,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -866,6 +897,7 @@ void yglTstrips3d(long nstrips, long *len, double *xyz,
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, nvert, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglQstrips3d(long nstrips, long *len, double *xyz,
@@ -890,6 +922,7 @@ void yglQstrips3d(long nstrips, long *len, double *xyz,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -961,6 +994,7 @@ void yglQstrips3d(long nstrips, long *len, double *xyz,
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, ncoord, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglTstripsndx3d(long nstrips, long numedg, long ntri,
@@ -982,6 +1016,7 @@ void yglTstripsndx3d(long nstrips, long numedg, long ntri,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -1033,6 +1068,7 @@ void yglTstripsndx3d(long nstrips, long numedg, long ntri,
   /* compute and save the bounding box (NOTE: asumes everything in
      xyz is actually used) */
   yglSetLims3d(elem, numedg, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglTarray3d(long ntri, double *xyz, double *norm, double *colr, 
@@ -1058,6 +1094,7 @@ void yglTarray3d(long ntri, double *xyz, double *norm, double *colr,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -1102,6 +1139,7 @@ void yglTarray3d(long ntri, double *xyz, double *norm, double *colr,
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, 3*ntri, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglQarray3d(long nquad, double *xyz, double *norm, double *colr, 
@@ -1127,6 +1165,7 @@ void yglQarray3d(long nquad, double *xyz, double *norm, double *colr,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -1169,6 +1208,7 @@ void yglQarray3d(long nquad, double *xyz, double *norm, double *colr,
   }
   /* compute and save the bounding box */
   yglSetLims3d(elem, 4*nquad, data->xyz);
+  ygl_fpemask(1);
 }
 
 void yglTivarray3d(long ntri, long nvert, long *ptndx, double *xyz, 
@@ -1190,6 +1230,7 @@ void yglTivarray3d(long ntri, long nvert, long *ptndx, double *xyz,
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -1225,24 +1266,26 @@ void yglTivarray3d(long ntri, long nvert, long *ptndx, double *xyz,
   /* Compute and save the bounding box.
      WARNING: this could be WRONG if there are points in the arrays
      that are never referenced. */
-  if(nvert <= 0) return;
-  xmin= xmax= xyz[0];
-  ymin= ymax= xyz[1];
-  zmin= zmax= xyz[2];
-  for(i= 1; i < nvert; i++) {
-    if(xyz[3*i] < xmin)   xmin= xyz[3*i];
-    if(xyz[3*i] > xmax)   xmax= xyz[3*i];
-    if(xyz[3*i+1] < ymin) ymin= xyz[3*i+1];
-    if(xyz[3*i+1] > ymax) ymax= xyz[3*i+1];
-    if(xyz[3*i+2] < zmin) zmin= xyz[3*i+2];
-    if(xyz[3*i+2] > zmax) zmax= xyz[3*i+2];
+  if(nvert > 0) {
+    xmin= xmax= xyz[0];
+    ymin= ymax= xyz[1];
+    zmin= zmax= xyz[2];
+    for(i= 1; i < nvert; i++) {
+      if(xyz[3*i] < xmin)   xmin= xyz[3*i];
+      if(xyz[3*i] > xmax)   xmax= xyz[3*i];
+      if(xyz[3*i+1] < ymin) ymin= xyz[3*i+1];
+      if(xyz[3*i+1] > ymax) ymax= xyz[3*i+1];
+      if(xyz[3*i+2] < zmin) zmin= xyz[3*i+2];
+      if(xyz[3*i+2] > zmax) zmax= xyz[3*i+2];
+    }
+    elem->box.xmin= (float) xmin;
+    elem->box.xmax= (float) xmax;
+    elem->box.ymin= (float) ymin;
+    elem->box.ymax= (float) ymax;
+    elem->box.zmin= (float) zmin;
+    elem->box.zmax= (float) zmax;
   }
-  elem->box.xmin= (float) xmin;
-  elem->box.xmax= (float) xmax;
-  elem->box.ymin= (float) ymin;
-  elem->box.ymax= (float) ymax;
-  elem->box.zmin= (float) zmin;
-  elem->box.zmax= (float) zmax;
+  ygl_fpemask(1);
 }
 
 void yglTvarray3d(long ntri, long nvert, long do_alpha, long cpervrt, long *ptndx,
@@ -1274,6 +1317,7 @@ void yglTvarray3d(long ntri, long nvert, long do_alpha, long cpervrt, long *ptnd
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -1368,24 +1412,26 @@ void yglTvarray3d(long ntri, long nvert, long do_alpha, long cpervrt, long *ptnd
   /* Compute and save the bounding box.
      WARNING: this could be WRONG if there are points in the arrays
      that are never referenced. */
-  if(nvert <= 0) return;
-  xmin= xmax= xyz[0];
-  ymin= ymax= xyz[1];
-  zmin= zmax= xyz[2];
-  for(i= 1; i < nvert; i++) {
-    if(xyz[3*i] < xmin)   xmin= xyz[3*i];
-    if(xyz[3*i] > xmax)   xmax= xyz[3*i];
-    if(xyz[3*i+1] < ymin) ymin= xyz[3*i+1];
-    if(xyz[3*i+1] > ymax) ymax= xyz[3*i+1];
-    if(xyz[3*i+2] < zmin) zmin= xyz[3*i+2];
-    if(xyz[3*i+2] > zmax) zmax= xyz[3*i+2];
+  if(nvert > 0) {
+    xmin= xmax= xyz[0];
+    ymin= ymax= xyz[1];
+    zmin= zmax= xyz[2];
+    for(i= 1; i < nvert; i++) {
+      if(xyz[3*i] < xmin)   xmin= xyz[3*i];
+      if(xyz[3*i] > xmax)   xmax= xyz[3*i];
+      if(xyz[3*i+1] < ymin) ymin= xyz[3*i+1];
+      if(xyz[3*i+1] > ymax) ymax= xyz[3*i+1];
+      if(xyz[3*i+2] < zmin) zmin= xyz[3*i+2];
+      if(xyz[3*i+2] > zmax) zmax= xyz[3*i+2];
+    }
+    elem->box.xmin= (float) xmin;
+    elem->box.xmax= (float) xmax;
+    elem->box.ymin= (float) ymin;
+    elem->box.ymax= (float) ymax;
+    elem->box.zmin= (float) zmin;
+    elem->box.zmax= (float) zmax;
   }
-  elem->box.xmin= (float) xmin;
-  elem->box.xmax= (float) xmax;
-  elem->box.ymin= (float) ymin;
-  elem->box.ymax= (float) ymax;
-  elem->box.zmin= (float) zmin;
-  elem->box.zmax= (float) zmax;
+  ygl_fpemask(1);
 }
 
 void yglTex3d(float ds, double *origin, double *boxsiz)
@@ -1399,6 +1445,7 @@ void yglTex3d(float ds, double *origin, double *boxsiz)
   /* there are nx-by-ny coordinates and normals and one color ????????? */
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
+  ygl_fpemask(0);
   elem= yglNewDirectList3dElem();
   elem->func= yglDrawTex3d;
   
@@ -1423,6 +1470,7 @@ void yglTex3d(float ds, double *origin, double *boxsiz)
   elem->box.ymax= origin[1]+boxsiz[1];
   elem->box.zmin= origin[2];
   elem->box.zmax= origin[2]+boxsiz[2];
+  ygl_fpemask(1);
 }
 
 void yglTexcell2d(long nx, long ny, long nz, double *znsiz, char *texval)
@@ -1438,6 +1486,7 @@ void yglTexcell2d(long nx, long ny, long nz, double *znsiz, char *texval)
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -1471,6 +1520,7 @@ void yglTexcell2d(long nx, long ny, long nz, double *znsiz, char *texval)
   elem->box.ymax= (ny-1)*znsiz[1];
   elem->box.zmin= 0.0;
   elem->box.zmax= (nz-1)*znsiz[2];
+  ygl_fpemask(1);
 }
 
 void yglPlpix3d(long nx, long ny, char *pix)
@@ -1485,6 +1535,7 @@ void yglPlpix3d(long nx, long ny, char *pix)
   /* add a new entry to the 3D display list (it will be in the list
      when it is returned). */
   if(!glCurrWin3d) return;
+  ygl_fpemask(0);
   if(glCurrWin3d->use_list) {
     elem= yglNewCachedList3dElem();
   } else {
@@ -1506,6 +1557,7 @@ void yglPlpix3d(long nx, long ny, char *pix)
   }
   /* A bounding box doesn't make sense for this function because
      it uses pixel coords. */
+  ygl_fpemask(1);
 }
 
 void yglDrawPolys3d(int mode, void *vdata)

@@ -27,7 +27,7 @@ YGL_I=dlist3d.i slicenew.i glcompat.i glprofile.i testgl.i testisotree.i
 YISO_OBJS=ContourTets3D.o Gradient3D.o isotree.o slicetree.o
 YGL_OBJS=glPolys.o glStrips.o gltexture.o glcode.o glfunc.o glMouse.o \
   glx11view.o glx11setup.o TriUtil.o dlist3d.o glTarray.o gltexsubs.o \
-  glustub.o glGlyph.o $(OGLXW)
+  glustub.o glGlyph.o $(OGLXW) glfpu.o
 
 include ./Makegl
 
@@ -83,6 +83,8 @@ slicetree.o: Contour3D.h slicetree.h
 oglx.o: playgl.h oglx.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(D_MESA_PIXMAPS) -o $@ -c oglx.c
 oglw.o: playgl.h
+glfpu.o: $(GLFUNC) glfpu.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(D_MISSING_FENV_H) -o $@ -c glfpu.c
 
 distclean::
 	./configure --distclean

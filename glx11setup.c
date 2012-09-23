@@ -69,6 +69,7 @@ int yglWin3d(int num, int w, int h)
     for(i= 0; i <= 7; i++) glWin3dList[i]= 0;
   }
   if(num < 0 || num > 7) return 1;  /* bad window number */
+  ygl_fpemask(0);
   if(glWin3dList[num]) {
     /* change the current window */
     glCurrWin3d= glWin3dList[num];
@@ -78,12 +79,14 @@ int yglWin3d(int num, int w, int h)
     res= yglMakWin(0, w, h, titlstr);
     if(!res) {
       /* failed to create the 3D window */
+      ygl_fpemask(1);
       return 2;
-	}
+    }
     /* reserve an OpenGL display list for this window */
     glCurrWin3d->the_gl_list = glGenLists(1);
     glWin3dList[num]= glCurrWin3d;
   }
+  ygl_fpemask(1);
   return 0;  /* indicate success */
 }
 
@@ -92,6 +95,7 @@ int yglWinKill3d(int num)
   glWinProp *theWin3d;
 
   if(num < 0 || num > 7) return 1;  /* bad window number */
+  ygl_fpemask(0);
   if(glWin3dList[num]) {
     theWin3d= glWin3dList[num];
     shutdown3d(theWin3d);
@@ -100,8 +104,10 @@ int yglWinKill3d(int num)
     if(glCurrWin3d == theWin3d) resetcurrwin3d();
   } else {
     /* tried to delete a non-existent 3D window */
+    ygl_fpemask(1);
     return 2;
   }
+  ygl_fpemask(1);
   return 0;  /* indicate success */
 }
 

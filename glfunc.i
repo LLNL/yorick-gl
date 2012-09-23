@@ -39,6 +39,7 @@
    the trailing "3d".
 */
 
+require, "cntrfunc.i";
 if (!is_void(plug_in)) plug_in, "yorgl";
 
 extern Draw3d;
@@ -905,4 +906,18 @@ extern SliceTris3d;
 /* PROTOTYPE
    void yglSliceTris3d(long array keep, long array nkeep, double array dp, 
                        pointer oldtri, pointer newtri)
+ */
+
+extern ygl_fpemask;
+/* DOCUMENT ygl_fpemask, 1
+ *   resets the SIGFPE mask to yorick's normal state, permitting SIGFPE.
+ *   Before calling any OpenGL function, the SIGFPE mask is reset to the
+ *   default setting for the platform, usually disabling SIGFPE signals.
+ *   If the OpenGL function is asynchronously interrupted, the SIGFPE
+ *   mask may not be reset.  This function enables you to restore the
+ *   normal yorick floating point environment should this occur.  You
+ *   never need to call this in a functioning program.
+ */
+/* PROTOTYPE
+   void ygl_fpemask(int on)
  */

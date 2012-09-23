@@ -90,9 +90,11 @@ double yglGetVers3d(void)
   char *version;
   double glver;
 
+  ygl_fpemask(0);
   yglMakeCurrent(glCurrWin3d);
   version = (char*) glGetString(GL_VERSION);
   glver= atof(version);
+  ygl_fpemask(1);
   return glver;
 }
 
@@ -1059,22 +1061,26 @@ void yglEndTex2d(void)
 
 void yglPrepTex3d(void)
 {
+  ygl_fpemask(0);
   glDisable(GL_LIGHTING);
   /*  glDisable(GL_DEPTH_TEST); */	/* No hidden surface removal for translucent */
   glDepthMask(GL_FALSE);	/* do not update depth buffer, but leave enabled */
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(glCurrWin3d->myGL_TEXTURE_3D);
+  ygl_fpemask(1);
 }
 
 void yglEndTex3d(void)
 {
+  ygl_fpemask(0);
   /* 2D textures are not available while 3D textures are enabled */
   glDisable(glCurrWin3d->myGL_TEXTURE_3D);
   glDisable(GL_BLEND);
   glEnable(GL_LIGHTING);
   glDepthMask(GL_TRUE);	/* resume updates of update depth buffer */
   /*  glEnable(GL_DEPTH_TEST); */	/* Hidden surface removal */
+  ygl_fpemask(1);
 }
 
 /* WARNING: Under Visual C++ 6.0 this function seg faults if
@@ -1088,6 +1094,7 @@ void yglLdTex3d(long nx, long ny, long nz, unsigned char *tex)
   long tex_siz;
 
   if(alpha_pass) return;
+  ygl_fpemask(0);
   if(!yglQueryTex3d(glCurrWin3d)) {
     YError("This computer does not have 3D textures");
   }
@@ -1241,6 +1248,7 @@ void yglLdTex3d(long nx, long ny, long nz, unsigned char *tex)
 #endif
 
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+  ygl_fpemask(1);
 }
 #pragma optimize( "", on )
 
@@ -1318,6 +1326,7 @@ void yglTex3dbox(double ds, double *origin, double *len)
   long i, j, ntri, maxtri, nvert, nslab;
 
   if(alpha_pass) return;
+  ygl_fpemask(0);
   /* NOTE: len is the length of the sides of the whole volume,
      not the size of an individual cell.
   */
@@ -1390,4 +1399,5 @@ void yglTex3dbox(double ds, double *origin, double *len)
     s += difs;
   }
   yglEndTex3d();
+  ygl_fpemask(1);
 }

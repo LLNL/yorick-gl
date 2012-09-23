@@ -91,6 +91,8 @@ extern void yglTivarray(long ntri, unsigned int *ptndx, void *ileave);
 extern void yglTvarray(long do_alpha, long cpervrt, long ntri, unsigned int *ptndx,
                        float *xyz, float *norm, float *colr);
 
+extern void ygl_fpemask(int on);
+
 #ifdef __cplusplus
 	}
 #endif

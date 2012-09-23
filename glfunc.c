@@ -74,7 +74,9 @@ int yglHasTex3d(void)
   if(!glCurrWin3d) {
     yglForceWin3d();
   }
+  ygl_fpemask(0);
   res= yglQueryTex3d(glCurrWin3d);
+  ygl_fpemask(1);
   return res;
 }
 
@@ -86,7 +88,9 @@ int yglHasTexcube3d(void)
   if(!glCurrWin3d) {
     yglForceWin3d();
   }
+  ygl_fpemask(0);
   res= yglQueryTexCube();
+  ygl_fpemask(1);
   return res;
 }
 

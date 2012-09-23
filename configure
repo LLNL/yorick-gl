@@ -96,6 +96,7 @@ else
 fi
 
 # search for a usable OpenGL
+missingfenvh=
 gmesapix=
 if test $skip_gl != yes; then
   gllist=" \
@@ -201,6 +202,13 @@ EOF
         gmesapix=-DUSE_MESA_PIXMAPS
         echo "  - using glXCreateGLXPixmapMESA"
       fi
+      args="$CFLAGS $gincs $LDFLAGS -o cfg glfpu.c"
+      if $CC -DYGL_CONFIG_MAIN $args $glibs $MATHLIB >/dev/null 2>&1; then
+        echo "found fesetenv, fegetenv in fpe.h"
+      else
+        missinggenvh=-DMISSING_FENV_H
+        echo "WARNING: missing fesetenv, fegetenv in fpe.h"
+      fi
     fi
   fi
 
@@ -247,6 +255,7 @@ PKG_I=$PKG_I
 OBJS=$OBJS
 OGLXW=$OGLXW
 D_MESA_PIXMAPS=$gmesapix
+D_MISSING_FENV_H=$missingfenvh
 PKG_DEPLIBS=$PKG_DEPLIBS
 PKG_CFLAGS=$PKG_CFLAGS
 PKG_LDFLAGS=
