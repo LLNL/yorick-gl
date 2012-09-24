@@ -909,7 +909,7 @@ extern SliceTris3d;
  */
 
 extern ygl_fpemask;
-/* DOCUMENT ygl_fpemask, 1
+/* DOCUMENT ygl_fpemask, -1
  *   resets the SIGFPE mask to yorick's normal state, permitting SIGFPE.
  *   Before calling any OpenGL function, the SIGFPE mask is reset to the
  *   default setting for the platform, usually disabling SIGFPE signals.

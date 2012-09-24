@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
 
 #else
 #include "glfunc.h"
+#include "yapi.h"
 #endif
 
 #ifndef MISSING_FENV_H
@@ -37,6 +38,7 @@ int main(int argc, char *argv[])
 
 static fenv_t ygl_fenv;
 static int ygl_valid_fenv = 0;
+static int ygl_depth_fenv = 0;  /* zero means at ygl_fenv */
 
 void
 ygl_fpemask(int on)
@@ -44,10 +46,14 @@ ygl_fpemask(int on)
   ygl_valid_fenv = (ygl_valid_fenv ||
                     !fegetenv(&ygl_fenv));
   if (ygl_valid_fenv) {
-    if (on)
-      fesetenv(&ygl_fenv);
-    else
-      fesetenv(FE_DFL_ENV);
+    if (on) {
+      if (on != 1) ygl_depth_fenv = 1;
+      if (!--ygl_depth_fenv)
+        fesetenv(&ygl_fenv);
+    } else {
+      if (!ygl_depth_fenv++)
+        fesetenv(FE_DFL_ENV);
+    }
   }
 }
 
