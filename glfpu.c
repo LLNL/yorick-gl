@@ -48,7 +48,7 @@ ygl_fpemask(int on)
   if (ygl_valid_fenv) {
     if (on) {
       if (on != 1) ygl_depth_fenv = 1;
-      if (!--ygl_depth_fenv)
+      if (ygl_depth_fenv && !--ygl_depth_fenv)
         fesetenv(&ygl_fenv);
     } else {
       if (!ygl_depth_fenv++)
